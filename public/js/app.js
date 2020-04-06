@@ -29,11 +29,6 @@ $("#get-button").on("click", function(){
              dataTitle + "<br>" + "<a href=' " +
             dataLink  + " 'target='_blank' '>Link Here</a>" + 
             "<br>" + "<button class= 'addBtn'> Add Article </button>" );
-    
-            
-
-    
-            
         }
   
     });

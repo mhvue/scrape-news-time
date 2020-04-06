@@ -39,9 +39,7 @@ app.get("/api/all", function (req,res){
         res.json(err)
     })
 
-})
-
-
+});
 
 //once saved, user can add comment POST
 
