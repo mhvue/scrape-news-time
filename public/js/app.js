@@ -22,15 +22,16 @@ $("#get-button").on("click", function(){
             // var dataSummary = data[i].summary; //showing as undefined righ tnow
             // console.log(dataSummary)
 
-            var addButton = $("<button>").addClass("addBtn").text("Add Article");
+            // var addButton = $("<button>").addClass("addBtn").text("Add Article");
     
 
-            $("#articlesTable").append("<tr>" + "<td>" + "<br>" +
+            $(".articlesTable").append("<tr>" + "<td>" + "<br>" +
              dataTitle + "<br>" + "<a href=' " +
-            dataLink  + " 'target='_blank' '>Link Here</a>")
-            $("<td>").append(addButton);
-
+            dataLink  + " 'target='_blank' '>Link Here</a>" + 
+            "<br>" + "<button class= 'addBtn'> Add Article </button>" );
+    
             
+
     
             
         }

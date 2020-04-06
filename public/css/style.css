@@ -1,0 +1,8 @@
+body {
+    background-color: pink;
+}
+
+tr,td {
+    border: solid 2px;
+    width: auto;
+}
