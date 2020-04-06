@@ -1,7 +1,5 @@
 var express = require("express");
 var mongoose = require("mongoose");
-var axios = require("axios");
-var cheerio = require("cheerio")
 
 var PORT = process.env.PORT || 3000;
 
@@ -17,12 +15,16 @@ mongoose.connect("mongodb://localhost/scrapenewsdb", { useNewUrlParser: true });
 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapenewsdb";
 
-mongoose.connect(MONGODB_URI);
+mongoose.connect(MONGODB_URI), function() {
+    mongoose.connection.db.dropDatabase();
+}
 
 //routes here
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
 
 app.listen(PORT, function(){
-    console.log("Listening on " + PORT)
+    console.log("Listening on " + "http://localhost:" + PORT)
 });
+
+module.exports = app;
