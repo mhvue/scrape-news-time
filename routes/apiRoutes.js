@@ -14,7 +14,7 @@ app.get("/api/scrape", function(req, res){
 
         $(".listingItem").each(function(i, element){
             results.title = $(element).children(".text").find("h2").text();
-            resuls.summary = $(element).children(".text").find("p").text();
+            results.summary = $(element).children(".text").find("p").text();
             results.link = $(element).children("p.image").find("a").attr("href");
 
     
@@ -30,6 +30,14 @@ app.get("/api/scrape", function(req, res){
     res.send("Scrape Complete");
 })
 
+// app.get("/api/delete", function(req, rest) {
+//    db.Article.deleteMany({}, function (err) {
+//         if(err) console.log(err);
+//         console.log("Successful deletion");
+//       });
+// });
+
+
 //when press button, saved that specific article 
 app.get("/api/all", function (req,res){
     db.Article.find({}).then(function(dbAll){
@@ -37,8 +45,23 @@ app.get("/api/all", function (req,res){
     })
     .catch(function(err){
         res.json(err)
-    })
+    });
 
+});
+
+//saving to save specific artiel
+app.get("/api/savedarticle/:id", function(req, res){
+    var savedarticle = req.params.id
+    console.log(savedarticle)
+    
+    db.Article.findById(savedarticle).then(function(dbOne){
+        res.json(dbOne)
+        console.log("hello" + dbOne);
+    })
+    .catch(function(err){
+        res.json(err)
+    });
+    
 });
 
 //once saved, user can add comment POST

@@ -12,8 +12,19 @@ tr,td {
     padding: 10px;
 }
 
-th {
+th, #headerP {
     border: none;
     width: 900px;
     font-size: 25px;
+}
+
+#headerP {
+    font-style: italic;
+    font-size: 20px;
+}
+
+.addBtn{
+    padding: 5px;
+    border-radius: 8px;
+    width: 130px;
 }
