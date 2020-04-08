@@ -72,14 +72,16 @@ app.post("/api/postarticle/:id", function(req, res){
     var savedArticle = req.params.id
     console.log("from app.post"+ savedArticle)
     
-    db.Article.findOneAndUpdate({_id:savedArticle}, {"saved": true}).then(function(dbOne){
-        res.json(dbOne)
-        console.log("now saved" + dbOne);
-    })
-    .catch(function(err){
-        res.json(err)
+    db.Article.findOneAndUpdate({_id:savedArticle}, {saved: true},function(err, result){
+        if(err){
+            res.send(err)
+        }
+        else{
+             res.json(result)
+             console.log("now saved" + result);
+        }
+        
     });
-    
 });
 //once saved, user can add comment POST
 
