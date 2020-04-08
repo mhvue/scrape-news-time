@@ -24,7 +24,7 @@ $("#get-button").on("click", function(){
             $(".articlesTable").append("<tr>" + "<td id='"+articleId +"' "+ " >" + "<br>" +
              dataTitle + "<br>" + "<a href=' " +
             dataLink  + " 'target='_blank' '> Read more about article here</a>" + 
-            "<br>" + dataSummary + "<br>" + "<button class= 'addBtn'> Save Article </button>" );
+            "<br>" + dataSummary + "<br>" + "<button class= 'saveBtn'> Save Article </button>" );
 
         }
   
@@ -33,7 +33,7 @@ $("#get-button").on("click", function(){
 });
 
 
-$(document.body).on("click",".addBtn", function(){
+$(document.body).on("click",".saveBtn", function(){
     console.log("click");
    
     var getArticleId= $(this).parent("td").attr("id");
@@ -43,11 +43,24 @@ $(document.body).on("click",".addBtn", function(){
     $.getJSON("/api/savedarticle/"+ getArticleId, function(data){
 
         console.log(data);
-       
+
+        $.post("/api/postarticle/" + getArticleId, data, function(dataPost){
+            console.log("here is what i'm going to post:" + dataPost.title)
+            $("#saved").append(dataPost.title)
+        })
+
     });
+        
+
+    
+    });
+
+
+
+
+
 });
 
 
 
 
-});
