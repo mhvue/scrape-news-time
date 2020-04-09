@@ -8,8 +8,6 @@ app.get("/api/scrape", function(req, res){
     axios.get("https://www.getthegloss.com/").then(function(response){
 
         var $ = cheerio.load(response.data);
-    
-    
         var results = {};
 
         $(".listingItem").each(function(i, element){
@@ -17,20 +15,23 @@ app.get("/api/scrape", function(req, res){
             results.summary = $(element).children(".text").find("p").text();
             results.link = $(element).children("p.image").find("a").attr("href");
 
-    
-        db.Article.create(results).then(function(dbArticle){
-            console.log(dbArticle)
-        })
-        .catch(function(err){
-            console.log(err)
+        
+            db.Article.create(results).then(function(dbArticle){
+              console.log(dbArticle)
+            })
+            .catch(function(err){
+                console.log(err)
+            });
         });
+
     });
 
-});
-    res.send("Scrape Complete");
-})
+    });
+    
+    
 
-app.get("/api/delete", function(req, rest) {
+
+app.get("/api/delete", function(req, res) {
    db.Article.deleteMany({}, function (err) {
         if(err) console.log(err);
         console.log("Successful deletion");
@@ -61,28 +62,39 @@ app.get("/api/savedarticle/:id", function(req, res){
     .catch(function(err){
         res.json(err)
     });
-    
 });
 
 // get route to display all saved article 
+app.get("/api/savedarticles", function(req, res){
+    
+    db.Article.find({saved: true}).then(function(dbAll){
+        res.json(dbAll)
+        console.log("hello" + dbAll);
+    })
+    .catch(function(err){
+        res.json(err)
+    });
+    
+});
 
-//post to save html
-app.post("/api/postarticle/:id", function(req, res){
+//post specific article to saveArticles.html
+app.put("/api/postarticle/:id", function(req, res){
 
     var savedArticle = req.params.id
-    console.log("from app.post"+ savedArticle)
+    console.log("from app.post"+ typeof savedArticle)
+
     
-    db.Article.findOneAndUpdate({_id:savedArticle}, {saved: true},function(err, result){
-        if(err){
-            res.send(err)
-        }
-        else{
-             res.json(result)
-             console.log("now saved" + result);
-        }
-        
+    db.Article.findOneAndUpdate({_id:savedArticle}, {$set: {saved: true}}).then(function(dbOne){
+        res.json(dbOne)
+        console.log("now saved" + dbOne);
+    })
+    .catch(function(err){
+        res.json(err)
     });
+    
 });
+
+
 //once saved, user can add comment POST
 
 //once saved, user can delete comment 

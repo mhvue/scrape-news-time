@@ -7,7 +7,7 @@ table {
     margin-right: auto;
 }
 
-tr,td {
+td {
     border: solid 2px;
     padding: 10px;
 }

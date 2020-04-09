@@ -16,6 +16,7 @@ mongoose.connect("mongodb://localhost/scrapenewsdb", { useNewUrlParser: true });
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapenewsdb";
 
 mongoose.connect(MONGODB_URI);
+mongoose.set('useFindAndModify', false);
 
 //routes here
 require("./routes/apiRoutes")(app);
