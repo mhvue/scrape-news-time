@@ -26,7 +26,7 @@ app.get("/api/scrape", function(req, res){
 
     });
     // res.send("Scrape Done")
-   return res.redirect("/api/all"); //not working 
+//    return res.redirect("/api/all"); //not working 
  });
     
 
@@ -76,7 +76,7 @@ app.get("/api/savedarticle/:id", function(req, res){
 });
 
 // get route to display all saved article 
-app.get("/api/savedarticles", function(req, res){
+app.get("/api/allsaved", function(req, res){
 
     db.Article.find({saved: true}).then(function(dbAll){
         res.json(dbAll)
@@ -89,7 +89,7 @@ app.get("/api/savedarticles", function(req, res){
 });
 
 //update specific article to SAVE 
-app.put("/api/postarticle/:id", function(req, res){
+app.put("/api/savearticle/:id", function(req, res){
 
     var savedArticle = req.params.id
     console.log("from app.put"+  savedArticle)

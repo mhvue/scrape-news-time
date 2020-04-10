@@ -2,9 +2,9 @@ $(document).ready(function () {
 
     $("#get-button").on("click", function () {
         console.log("click");
-        $(".articlesTable").empty();
+        // $(".articlesTable").empty();
 
-        $.getJSON("/api/scrape", function (data) {
+        $.getJSON("/api/all", function (data) {
            console.log(data)
     
             for (var i = 0; i < 10; i++) {
@@ -12,42 +12,34 @@ $(document).ready(function () {
                 // console.log(data[i])
                 var dataTitle = data[i].title;
                 var dataLink = data[i].link;
-                // console.log(dataLink)
-                var dataSummary = data[i].summary; //showing as undefined righ tnow
+                console.log(dataLink)
+                var dataSummary = data[i].summary; 
                 // console.log(dataSummary)
                 var articleId = data[i]._id;
+                
+                if(dataSummary == "") {
+                    var nullMsg= "Sorry, no summary at this time. Click link for more"
 
-                // var addButton = $("<button>").addClass("addBtn").text("Add Article");
-
-                //if/else not not working correctly
-                if(dataTitle == "" && dataSummary == "") {
-                    var nullMsg= "Sorry No value at this time."
-
-                    var dataNew= $("<div>").append($("<h5>").text(nullMsg).attr("data-title", "title"),
+                    var dataNew= $("<div>").append($("<h5>").text(dataTitle).attr("data-title", "title"),
                     $("<p>").text(nullMsg).attr("data-summary", "summary"),
-                    $("<p id='linkID>").html("<a href=' " + dataLink +
-                        " 'target='_blank' '> Read more about article here</a>").attr("data-link", "link"),
-                    $("<button>").addClass("addBtn").text("Add Article")
-                );
+                    $("<p>").html("<a href='" + dataLink +
+                        "'target='_blank'> Read more about article here</a>").attr("data-link", "link"),
+                    $("<button>").addClass("addBtn").text("Add Article"));
 
                     dataNew.attr("data-info", articleId);
-
                     $(".articlesTable").append(dataNew);
                 
                 }
-
                 else {
-                var dataNew= $("<div>").append($("<h5>").text(dataTitle).attr("data-title", "title"),
-                    $("<p>").text(dataSummary).attr("data-summary", "summary"),
-                    $("<p id='linkID>").html("<a href=' " + dataLink +
-                        " 'target='_blank' '> Read more about article here</a>").attr("data-link", "link"),
-                    $("<button>").addClass("addBtn").text("Add Article")
-                );
+                    var dataNew= $("<div>").append($("<h5>").text(dataTitle).attr("data-title", "title"),
+                        $("<p>").text(dataSummary).attr("data-summary", "summary"),
+                        $("<p>").html("<a href='" + dataLink +
+                        "' target='_blank' > Read more about article here</a>").attr("data-link", "link"),
+                        $("<button>").addClass("addBtn").text("Add Article"));
 
-                dataNew.attr("data-info", articleId);
-
-                $(".articlesTable").append(dataNew);
-            }
+                    dataNew.attr("data-info", articleId);
+                    $(".articlesTable").append(dataNew);
+                }
                 
             }
 
@@ -64,7 +56,7 @@ $(document).ready(function () {
         console.log(articleId)
 
         $.ajax({
-            url: "/api/postarticle/" + articleId,
+            url: "/api/savearticle/" + articleId,
             type: 'PUT',
             success: function (dataPost) {
                 console.log(dataPost)
@@ -80,7 +72,7 @@ $(document).ready(function () {
         console.log("click")
 
 
-        $.get("/api/savedarticles", function (data) {
+        $.get("/api/allsaved", function (data) {
             // console.log(data);
         
             //running to erroes with the for loop
