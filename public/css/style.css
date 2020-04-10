@@ -1,27 +1,17 @@
-body {
+body, .card, .card-header {
     background-color: pink;
 }
 
-table {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-td {
-    border: solid 2px;
-    padding: 10px;
-}
-
-th, #headerP {
+ #headerP {
     border: none;
     width: 900px;
     font-size: 25px;
-}
-
-#headerP {
+    margin-left: auto;
+    margin-right: auto;
     font-style: italic;
     font-size: 20px;
 }
+
 
 .addBtn{
     padding: 5px;

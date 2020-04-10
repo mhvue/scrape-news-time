@@ -18,25 +18,44 @@
         </div>
         <div class="text-center">
         <a class="btn btn-primary btn-lg" id = "get-button" href="#" role="button">Get Articles</a>
-        <a class="btn btn-primary btn-lg" id = "save-button" href="/savedarticles"  role="button">View Saved Articles</a>
+        <a class="btn btn-primary btn-lg" id = "save-button" href="#"  role="button">View Saved Articles</a>
         <a class="btn btn-primary btn-lg" id = "clear-button" href="#" role="button">Clear Articles</a>
         </div>
       </div>
 
     <div class="container text-center">
-      <div class="row no-gutters">
-        <div class="col-md-12">
-          <table class="articlesTable"> 
-            <th>Articles Here<p id="headerP">(all articles from getthegloss.com)</p></th>
+      <div class="card">
+          <div class="articlesTable"> 
+            <div class="card-header">
+              <h3>Articles Here</h3>
+              <p id="headerP">(all articles from People.com)</p>
           
-          </table>
+            </div>
         </div>
      </div>
 <br>
     </div>
 
+  <!-- saved modal msg -->
+    <div class="modal" id="savedModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Saved!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Article now saved.</p>
+          </div>
+          <div class="modal-footer">
+            </div>
+        </div>
       </div>
+    </div>
 
+  
 
     
 

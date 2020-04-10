@@ -5,15 +5,15 @@ var cheerio = require("cheerio");
 module.exports = function(app) {
 //get the scraped articles + add it scrape articles to db
 app.get("/api/scrape", function(req, res){
-    axios.get("https://www.getthegloss.com/").then(function(response){
+    axios.get("https://people.com/tag/beauty-news/").then(function(response){
 
         var $ = cheerio.load(response.data);
         var results = {};
 
-        $(".listingItem").each(function(i, element){
-            results.title = $(element).children(".text").find("h2").text();
-            results.summary = $(element).children(".text").find("p").text();
-            results.link = $(element).children("p.image").find("a").attr("href");
+        $(".category-page-item").each(function(i, element){
+            results.link = $(element).children(".category-page-item-content").children("a").attr("href")
+           results.title =$(element).children(".category-page-item-content").children("a").find(".category-page-item-title").text();
+            results.summary = $(element).children(".category-page-item-content").children(".category-page-item-description").text();
 
         
             db.Article.create(results).then(function(dbArticle){
@@ -25,18 +25,29 @@ app.get("/api/scrape", function(req, res){
         });
 
     });
-
-    });
+    // res.send("Scrape Done")
+   return res.redirect("/api/all"); //not working 
+ });
     
-    
 
-
+ //delete ALL articles
 app.get("/api/delete", function(req, res) {
    db.Article.deleteMany({}, function (err) {
         if(err) console.log(err);
         console.log("Successful deletion");
       });
+
 });
+
+ //delete one article 
+ app.get("/api/delete/:id", function(req, res) {
+    var id = req.params.id
+    db.Article.deleteOne({_id:id}, function (err) {
+         if(err) console.log(err);
+         console.log("Successful deletion");
+       });
+ 
+ });
 
 
 //when press button, we get all the articles (that is scraped)
@@ -66,7 +77,7 @@ app.get("/api/savedarticle/:id", function(req, res){
 
 // get route to display all saved article 
 app.get("/api/savedarticles", function(req, res){
-    
+
     db.Article.find({saved: true}).then(function(dbAll){
         res.json(dbAll)
         console.log("hello" + dbAll);
@@ -74,14 +85,14 @@ app.get("/api/savedarticles", function(req, res){
     .catch(function(err){
         res.json(err)
     });
-    
+  
 });
 
-//post specific article to saveArticles.html
+//update specific article to SAVE 
 app.put("/api/postarticle/:id", function(req, res){
 
     var savedArticle = req.params.id
-    console.log("from app.post"+ typeof savedArticle)
+    console.log("from app.put"+  savedArticle)
 
     
     db.Article.findOneAndUpdate({_id:savedArticle}, {$set: {saved: true}}).then(function(dbOne){
@@ -98,7 +109,5 @@ app.put("/api/postarticle/:id", function(req, res){
 //once saved, user can add comment POST
 
 //once saved, user can delete comment 
-
-//once saved, user can delete article 
 
 };
