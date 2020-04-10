@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+//get ALL articles to show on index.html (need to fix so that it scrapes 1st then shows all)
     $("#get-button").on("click", function () {
         console.log("click");
         $(".articlesTable").empty();
@@ -11,7 +11,6 @@ $(document).ready(function () {
 
                 var dataTitle = data[i].title;
                 var dataLink = data[i].link;
-                console.log(dataLink)
                 var dataSummary = data[i].summary; 
                 // console.log(dataSummary)
                 var articleId = data[i]._id;
@@ -46,71 +45,73 @@ $(document).ready(function () {
     });
 
 
-    //saving one article 
+ //saving one article 
     $(document.body).on("click", ".addBtn", function () {
-        var articleId = $(this).parent("div").attr("data-info")
+        var articleId = $(this).parent("div").attr("data-info");
         $.ajax({
             url: "/api/savearticle/" + articleId,
             type: 'PUT',
             success: function (dataSaved) {
-                console.log(dataSaved)
-                $("#savedModal").modal("toggle")
+                // console.log(dataSaved)
+                $("#savedModal").modal("toggle");
 
             }
         });
 
     });
 
-    //get ALL the saved articles 
+//get ALL the saved articles 
     $("#save-button").on("click",function () {
         $.get("/api/allsaved", function (data) {
             console.log(data);
-        
-            //running to erroes with the for loop
+    
             for (var j = 0; j < data.length; j++) {
     
                 var savedTitle = data[j].title;
                 var savedSummary = data[j].summary;
                 var savedLink = data[j].link;
+                var savedId= data[j]._id;
                 
                 if(savedSummary == "") {
                     var nullMsg= "Sorry, no summary at this time. Click link for more"
 
-                    var savedNew= $("<div>").append($("<h5>").text(savedTitle).attr("data-title", "title"),
-                        $("<p>").text(nullMsg).attr("data-summary", "summary"),
+                    var savedNew= $("<div>").append($("<h5>").text(savedTitle).attr("data-savedTitle", "title"),
+                        $("<p>").text(nullMsg).attr("data-savedSummary", "summary"),
                         $("<p>").html("<a href='" + savedLink +
-                            "'target='_blank'> Read more about article here</a>").attr("data-link", "link"),
-                        $("<button>").addClass("addBtn").text("Add Article"),
+                            "'target='_blank'> Read more about article here</a>").attr("data-savedLink", "link"),
+                        $("<button>").addClass("addNote").text("Add Note"),
+                        $("<button>").addClass("deleteBtn").text("Delete Article"),
                         $("<div>").html("<hr>") );
 
-                        savedNew.attr("data-info", "saved");
+                        savedNew.attr("data-savedInfo", savedId);
                         $(".saveTable").append(savedNew);
                     
                 }
                 else {
                     
-                    var savedNew= $("<div>").append($("<h5>").text(nullMsg).attr("data-title", "title"),
-                        $("<p>").text(savedSummary).attr("data-summary", "summary"),
+                    var savedNew= $("<div>").append($("<h5>").text(savedTitle).attr("data-savedTitle", "title"),
+                        $("<p>").text(savedSummary).attr("data-savedSummary", "summary"),
                         $("<p>").html("<a href='" + savedLink +
-                            "'target='_blank'> Read more about article here</a>").attr("data-link", "link"),
-                        $("<button>").addClass("addBtn").text("Add Article"),
+                            "'target='_blank'> Read more about article here</a>").attr("data-savedLink", "link"),
+                        $("<button>").addClass("addNote").text("Add Note"),
+                        $("<button>").addClass("deleteBtn").text("Delete Article"),
                         $("<div>").html("<hr>") );
 
-                        savedNew.attr("data-info", "saved");
+                        savedNew.attr("data-info", savedId);
                         $(".saveTable").append(savedNew);
-                    }
+                 };
+
             };
-
-            // $(".saveTable").append(savedNew);
-            // console.log(savedNew)
-        });
-          
-        // };
            
-});
-    // savedData()
-//   $(".articlesTable").append("hello")
+        });
+           
+    });
 
+//adding a comment/note 
+
+
+
+//delete all articles from Index.html
     $("#clear-button").on("click", function(){
         
         $(".articlesTable").empty();
@@ -125,6 +126,22 @@ $(document).ready(function () {
         $(".articlesTable").append(newDiv);
         
      });
+
+//delete one article from  SAVED list 
+     $(document.body).on("click", ".deleteBtn",function(req, res){
+        console.log(this);
+        
+        var deleteArticle= $(this).parent("div").attr("data-savedInfo")
+        // console.log(deleteArticle)
+
+        $.get("/api/delete/" + deleteArticle, function(data){
+             if(data){
+                 console.log("done")
+             }
+        });
+
+
+     })
 
 
 

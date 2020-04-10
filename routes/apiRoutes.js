@@ -42,11 +42,18 @@ app.get("/api/delete", function(req, res) {
  //delete one article 
  app.get("/api/delete/:id", function(req, res) {
     var id = req.params.id
-    db.Article.deleteOne({_id:id}, function (err) {
-         if(err) console.log(err);
-         console.log("Successful deletion");
-       });
+    console.log("this is to be delete" + id)
+
+    // db.Article.deleteOne({_id:id}, function (err) {
+    //      if(err){
+    //          console.log(err)
+    //      }
+    //      else{
+    //      console.log("Successful deletion");
+    //      }
+    //    });
  
+
  });
 
 
@@ -106,8 +113,54 @@ app.put("/api/savearticle/:id", function(req, res){
 });
 
 
-//once saved, user can add comment POST
+//user can post note associated with that specific article 
+app.post("api/addnote/:id", function(req, res){
 
-//once saved, user can delete comment 
+    var note= req.body
+    var savedArticle = req.params.id
+
+    db.Note.create(note).then(function(req, res){
+        //if note is successfully created, find that specific article from
+        // Article model, and push the new note _id to the Article col. note arrary
+        return db.Article.findOneAndUpdate({_id:savedArticle}, {$push: {note: dbNote._id }},{new: true}); 
+        //how would it know to find that specific article? 
+
+    }).then(function(dbArticle){
+        res.json(dbArticle);
+    })
+    .catch(function(err){
+        res.json(err);
+    });
+
+});
+
+//users can get ALL notes for that specific article (this is POPULATE)
+app.get("api/allnotes/:id", function(res, req){
+
+    var savedArticle = req.params.id
+
+    db.Article.findById(savedArticle).populate("note").then(function (dbArticle) {
+        res.json(dbArticle);
+    })
+    .catch(function(err){
+        res.json(err)
+    });
+
+});
+
+
+
+//user can delete note from that specific article
+app.get("api/deletenote/:id", function (req, res){
+    
+    var noteId = req.params.id
+
+    //delete from the Note model or vice versa?
+    //update the Article model 
+    db.Note.deleteOne({_id:noteId}).then(function( res, req){
+        db.Article.findOneAndDelete({_id: savedArticle})
+    })
+})
+
 
 };
