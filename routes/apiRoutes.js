@@ -21,12 +21,12 @@ app.get("/api/scrape", function(req, res){
             })
             .catch(function(err){
                 console.log(err)
+           
             });
         });
 
     });
-    // res.send("Scrape Done")
-//    return res.redirect("/api/all"); //not working 
+    res.send()
  });
     
 
@@ -37,27 +37,29 @@ app.get("/api/delete", function(req, res) {
         console.log("Successful deletion");
       });
 
+      res.send()
+
 });
 
- //delete one article 
+ //delete one article from saved html
  app.get("/api/delete/:id", function(req, res) {
     var id = req.params.id
     console.log("this is to be delete" + id)
 
-    // db.Article.deleteOne({_id:id}, function (err) {
-    //      if(err){
-    //          console.log(err)
-    //      }
-    //      else{
-    //      console.log("Successful deletion");
-    //      }
-    //    });
+    db.Article.deleteOne({_id:id}, function (err) {
+         if(err){
+             console.log(err)
+         }
+         else{
+         console.log("Successful deletion");
+         }
+       });
  
 
  });
 
 
-//when press button, we get all the articles (that is scraped)
+//get all the articles (that is scraped)
 app.get("/api/all", function (req,res){
     db.Article.find({"saved": false}).then(function(dbAll){
         res.json(dbAll)

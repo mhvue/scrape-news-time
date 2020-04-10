@@ -4,44 +4,51 @@ $(document).ready(function () {
         console.log("click");
         $(".articlesTable").empty();
 
-        $.getJSON("/api/all", function (data) {
-           console.log(data)
-    
-            for (var i = 0; i < 10; i++) {
+        $.get("/api/scrape", function(){
 
-                var dataTitle = data[i].title;
-                var dataLink = data[i].link;
-                var dataSummary = data[i].summary; 
-                // console.log(dataSummary)
-                var articleId = data[i]._id;
-                
-                if(dataSummary == "") {
-                    var nullMsg= "Sorry, no summary at this time. Click link for more"
+            $.getJSON("/api/all", function (data) {
+                console.log(data)
+         
+                 for (var i = 0; i < 10; i++) {
+     
+                     var dataTitle = data[i].title;
+                     var dataLink = data[i].link;
+                     var dataSummary = data[i].summary; 
+                     // console.log(dataSummary)
+                     var articleId = data[i]._id;
+                     
+                     if(dataSummary == "") {
+                         var nullMsg= "Sorry, no summary at this time. Click link for more"
+     
+                         var dataNew= $("<div>").append($("<h5>").text(dataTitle).attr("data-title", "title"),
+                             $("<p>").text(nullMsg).attr("data-summary", "summary"),
+                             $("<p>").html("<a href='" + dataLink +
+                                 "'target='_blank'> Read more about article here</a>").attr("data-link", "link"),
+                             $("<button>").addClass("addBtn").text("Add Article"),
+                             $("<div>").html("<hr>") );
+     
+                             dataNew.attr("data-info", articleId);
+                             $(".articlesTable").append(dataNew);
+                         
+                     }
+                     else {
+                         var dataNew= $("<div>").append($("<h5>").text(dataTitle).attr("data-title", "title"),
+                             $("<p>").text(dataSummary).attr("data-summary", "summary"),
+                             $("<p>").html("<a href='" + dataLink +
+                             "' target='_blank' > Read more about article here</a>").attr("data-link", "link"),
+                             $("<button>").addClass("addBtn").text("Add Article"),
+                             $("<div>").html("<hr>") );
+     
+                             dataNew.attr("data-info", articleId);
+                             $(".articlesTable").append(dataNew);
+                     }
+                 }
+             });
 
-                    var dataNew= $("<div>").append($("<h5>").text(dataTitle).attr("data-title", "title"),
-                        $("<p>").text(nullMsg).attr("data-summary", "summary"),
-                        $("<p>").html("<a href='" + dataLink +
-                            "'target='_blank'> Read more about article here</a>").attr("data-link", "link"),
-                        $("<button>").addClass("addBtn").text("Add Article"),
-                        $("<div>").html("<hr>") );
-
-                        dataNew.attr("data-info", articleId);
-                        $(".articlesTable").append(dataNew);
-                    
-                }
-                else {
-                    var dataNew= $("<div>").append($("<h5>").text(dataTitle).attr("data-title", "title"),
-                        $("<p>").text(dataSummary).attr("data-summary", "summary"),
-                        $("<p>").html("<a href='" + dataLink +
-                        "' target='_blank' > Read more about article here</a>").attr("data-link", "link"),
-                        $("<button>").addClass("addBtn").text("Add Article"),
-                        $("<div>").html("<hr>") );
-
-                        dataNew.attr("data-info", articleId);
-                        $(".articlesTable").append(dataNew);
-                }
-            }
         });
+
+
+
     });
 
 
@@ -60,54 +67,24 @@ $(document).ready(function () {
 
     });
 
-//get ALL the saved articles 
-    $("#save-button").on("click",function () {
-        $.get("/api/allsaved", function (data) {
-            console.log(data);
+
+
+//adding a note to articles that is saved 
+    //click on add note button  
+    //modal to pop up to:
+        //add note in a textbox (need to create a textbox, append to model)
+        // then click save to send info to server and DB
+            //post to the api route 
+        // display all notes entered 
+            //(example doesn't display right away..happens after a click again)
+            //display option to delete
     
-            for (var j = 0; j < data.length; j++) {
-    
-                var savedTitle = data[j].title;
-                var savedSummary = data[j].summary;
-                var savedLink = data[j].link;
-                var savedId= data[j]._id;
-                
-                if(savedSummary == "") {
-                    var nullMsg= "Sorry, no summary at this time. Click link for more"
 
-                    var savedNew= $("<div>").append($("<h5>").text(savedTitle).attr("data-savedTitle", "title"),
-                        $("<p>").text(nullMsg).attr("data-savedSummary", "summary"),
-                        $("<p>").html("<a href='" + savedLink +
-                            "'target='_blank'> Read more about article here</a>").attr("data-savedLink", "link"),
-                        $("<button>").addClass("addNote").text("Add Note"),
-                        $("<button>").addClass("deleteBtn").text("Delete Article"),
-                        $("<div>").html("<hr>") );
+//delete a note from article on modal on saved html
+     //on click of deleteNote btn 
+     // ajax of GET to go to db to delete 
+     //alert msg note has been deleted 
 
-                        savedNew.attr("data-savedInfo", savedId);
-                        $(".saveTable").append(savedNew);
-                    
-                }
-                else {
-                    
-                    var savedNew= $("<div>").append($("<h5>").text(savedTitle).attr("data-savedTitle", "title"),
-                        $("<p>").text(savedSummary).attr("data-savedSummary", "summary"),
-                        $("<p>").html("<a href='" + savedLink +
-                            "'target='_blank'> Read more about article here</a>").attr("data-savedLink", "link"),
-                        $("<button>").addClass("addNote").text("Add Note"),
-                        $("<button>").addClass("deleteBtn").text("Delete Article"),
-                        $("<div>").html("<hr>") );
-
-                        savedNew.attr("data-info", savedId);
-                        $(".saveTable").append(savedNew);
-                 };
-
-            };
-           
-        });
-           
-    });
-
-//adding a comment/note 
 
 
 
@@ -116,7 +93,7 @@ $(document).ready(function () {
         
         $(".articlesTable").empty();
         
-        $.get("/api/delete", function(data){
+        $.get("/api/delete", function(){
             console.log("done!");
 
         });
@@ -142,8 +119,6 @@ $(document).ready(function () {
 
 
      })
-
-
 
 
 

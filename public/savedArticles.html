@@ -24,22 +24,74 @@
 
       <div class="container text-center">
         <div class="card">
-            <h3>Saved Articles Here</h3>
+            <div class="card-header">
+             <h3>Saved Articles Here</h3>
+            </div>
             <div class="saveTable"> 
               <div class="card-header">
-                
+
                 <p>Nothing here yet.</p>
               </div>
-          </div>
+
        </div>
   <br>
       </div>
 
-    
-      
+
+
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script src="js/app.js"></script>
+
+<script>
+      //get ALL the saved articles 
+        $.get("/api/allsaved", function (data) {
+            console.log(data);
+    
+            for (var j = 0; j < data.length; j++) {
+    
+                var savedTitle = data[j].title;
+                var savedSummary = data[j].summary;
+                var savedLink = data[j].link;
+                var savedId= data[j]._id;
+                
+                if(savedSummary == "") {
+                    var nullMsg= "Sorry, no summary at this time. Click link for more"
+
+                    var savedNew= $("<div>").append($("<h5>").text(savedTitle).attr("data-savedTitle", "title"),
+                        $("<p>").text(nullMsg).attr("data-savedSummary", "summary"),
+                        $("<p>").html("<a href='" + savedLink +
+                            "'target='_blank'> Read more about article here</a>").attr("data-savedLink", "link"),
+                        $("<button>").addClass("addNote").text("Add Note"),
+                        $("<button>").addClass("deleteBtn").text("Delete Article"),
+                        $("<div>").html("<hr>") );
+
+                        savedNew.attr("data-savedInfo", savedId);
+                        $(".saveTable").append(savedNew);
+                    
+                }
+                else {
+                    
+                    var savedNew= $("<div>").append($("<h5>").text(savedTitle).attr("data-savedTitle", "title"),
+                        $("<p>").text(savedSummary).attr("data-savedSummary", "summary"),
+                        $("<p>").html("<a href='" + savedLink +
+                            "'target='_blank'> Read more about article here</a>").attr("data-savedLink", "link"),
+                        $("<button>").addClass("addNote").text("Add Note"),
+                        $("<button>").addClass("deleteBtn").text("Delete Article"),
+                        $("<div>").html("<hr>") );
+
+                        savedNew.attr("data-info", savedId);
+                        $(".saveTable").append(savedNew);
+                 };
+
+            };
+           
+        });
+           
+    
+
+
+</script> 
 </body>
 
 </html>
