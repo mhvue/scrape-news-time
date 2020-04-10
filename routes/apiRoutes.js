@@ -32,7 +32,7 @@ app.get("/api/scrape", function(req, res){
 
  //delete ALL articles
 app.get("/api/delete", function(req, res) {
-   db.Article.deleteMany({}, function (err) {
+   db.Article.deleteMany({"saved":false}, function (err) {
         if(err) console.log(err);
         console.log("Successful deletion");
       });
@@ -46,7 +46,7 @@ app.get("/api/delete", function(req, res) {
     var id = req.params.id
     console.log("this is to be delete" + id)
 
-    db.Article.deleteOne({_id:id}, function (err) {
+    db.Article.deleteOne({_id: id}, function (err) {
          if(err){
              console.log(err)
          }
@@ -111,6 +111,8 @@ app.put("/api/savearticle/:id", function(req, res){
     .catch(function(err){
         res.json(err)
     });
+
+
     
 });
 

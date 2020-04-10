@@ -28,11 +28,7 @@
              <h3>Saved Articles Here</h3>
             </div>
             <div class="saveTable"> 
-              <div class="card-header">
-
-                <p>Nothing here yet.</p>
-              </div>
-
+                <p id="nothingMsg">Nothing here yet.</p>
        </div>
   <br>
       </div>
@@ -44,10 +40,11 @@
 <script src="js/app.js"></script>
 
 <script>
+if($(".saveTable").val() == ""){
+    $("#nothingMsg").show();
+}
       //get ALL the saved articles 
         $.get("/api/allsaved", function (data) {
-            console.log(data);
-    
             for (var j = 0; j < data.length; j++) {
     
                 var savedTitle = data[j].title;
@@ -66,12 +63,13 @@
                         $("<button>").addClass("deleteBtn").text("Delete Article"),
                         $("<div>").html("<hr>") );
 
-                        savedNew.attr("data-savedInfo", savedId);
+                        savedNew.attr("id", savedId);
+                        $("#nothingMsg").hide()
                         $(".saveTable").append(savedNew);
+            
                     
                 }
                 else {
-                    
                     var savedNew= $("<div>").append($("<h5>").text(savedTitle).attr("data-savedTitle", "title"),
                         $("<p>").text(savedSummary).attr("data-savedSummary", "summary"),
                         $("<p>").html("<a href='" + savedLink +
@@ -80,16 +78,15 @@
                         $("<button>").addClass("deleteBtn").text("Delete Article"),
                         $("<div>").html("<hr>") );
 
-                        savedNew.attr("data-info", savedId);
-                        $(".saveTable").append(savedNew);
+                        savedNew.attr("id", savedId);
+                        $("#nothingMsg").hide()
+                        $(".saveTable").append(savedNew)
+                    
                  };
 
             };
            
         });
-           
-    
-
 
 </script> 
 </body>

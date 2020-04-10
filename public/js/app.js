@@ -1,20 +1,15 @@
 $(document).ready(function () {
-//get ALL articles to show on index.html (need to fix so that it scrapes 1st then shows all)
     $("#get-button").on("click", function () {
-        console.log("click");
         $(".articlesTable").empty();
 
         $.get("/api/scrape", function(){
 
-            $.getJSON("/api/all", function (data) {
-                console.log(data)
-         
-                 for (var i = 0; i < 10; i++) {
+            $.get("/api/all", function (data) {
+                 for (var i = 0; i < data.length; i++) {
      
                      var dataTitle = data[i].title;
                      var dataLink = data[i].link;
                      var dataSummary = data[i].summary; 
-                     // console.log(dataSummary)
                      var articleId = data[i]._id;
                      
                      if(dataSummary == "") {
@@ -25,9 +20,9 @@ $(document).ready(function () {
                              $("<p>").html("<a href='" + dataLink +
                                  "'target='_blank'> Read more about article here</a>").attr("data-link", "link"),
                              $("<button>").addClass("addBtn").text("Add Article"),
-                             $("<div>").html("<hr>") );
+                             $("<p>").html("<hr>") );
      
-                             dataNew.attr("data-info", articleId);
+                             dataNew.attr("id", articleId);
                              $(".articlesTable").append(dataNew);
                          
                      }
@@ -37,9 +32,9 @@ $(document).ready(function () {
                              $("<p>").html("<a href='" + dataLink +
                              "' target='_blank' > Read more about article here</a>").attr("data-link", "link"),
                              $("<button>").addClass("addBtn").text("Add Article"),
-                             $("<div>").html("<hr>") );
+                             $("<p>").html("<hr>") );
      
-                             dataNew.attr("data-info", articleId);
+                             dataNew.attr("id", articleId);
                              $(".articlesTable").append(dataNew);
                      }
                  }
@@ -47,19 +42,17 @@ $(document).ready(function () {
 
         });
 
-
-
     });
 
 
  //saving one article 
     $(document.body).on("click", ".addBtn", function () {
-        var articleId = $(this).parent("div").attr("data-info");
+        var articleId = $(this).parent("div").attr("id");
         $.ajax({
             url: "/api/savearticle/" + articleId,
             type: 'PUT',
             success: function (dataSaved) {
-                // console.log(dataSaved)
+                $("#"+ articleId).fadeOut("slow");
                 $("#savedModal").modal("toggle");
 
             }
@@ -95,7 +88,6 @@ $(document).ready(function () {
         
         $.get("/api/delete", function(){
             console.log("done!");
-
         });
 
         var newDiv = $("<div>").html("<h5> All Cleared!" + "<br>" +
@@ -108,18 +100,15 @@ $(document).ready(function () {
      $(document.body).on("click", ".deleteBtn",function(req, res){
         console.log(this);
         
-        var deleteArticle= $(this).parent("div").attr("data-savedInfo")
-        // console.log(deleteArticle)
+        var deleteArticle= $(this).parent("div").attr("id")
+        console.log(deleteArticle)
 
-        $.get("/api/delete/" + deleteArticle, function(data){
-             if(data){
-                 console.log("done")
-             }
+        $.get("/api/delete/" + deleteArticle, function(){
+
         });
 
-
-     })
-
+        $("#"+ deleteArticle).remove();
+     });
 
 
 });
