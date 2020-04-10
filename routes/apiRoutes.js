@@ -78,7 +78,7 @@ app.get("/api/savedarticle/:id", function(req, res){
 // get route to display all saved article 
 app.get("/api/allsaved", function(req, res){
 
-    db.Article.find({saved: true}).then(function(dbAll){
+    db.Article.find({"saved": true}).then(function(dbAll){
         res.json(dbAll)
         console.log("hello" + dbAll);
     })
@@ -88,7 +88,7 @@ app.get("/api/allsaved", function(req, res){
   
 });
 
-//update specific article to SAVE 
+//update = specific article to SAVE 
 app.put("/api/savearticle/:id", function(req, res){
 
     var savedArticle = req.params.id
