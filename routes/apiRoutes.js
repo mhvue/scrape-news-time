@@ -160,7 +160,7 @@ app.get("/api/allnotes/:id", function(req, res){
 
 
 
-//user can delete note from that specific article
+//user can delete note from that specific article //STILL NEED TO TEST THIS 
 app.get("api/deletenote/:id", function (res, req){
     
     var noteId = req.params.id
