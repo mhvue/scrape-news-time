@@ -77,30 +77,30 @@ $(document).ready(function () {
 
             $(".btn-primary").on("click", function () {
 
-                    var addNote = {
-                        body: $("#noteBox").val()
-                    }
+                var addNote = {
+                    body: $("#noteBox").val()
+                }
 
 
-                    $.post("/api/addnote/" + noteIdArticle, addNote, function () {
-                            console.log("note is done on Front end")
-                            console.log(noteIdArticle);
+                $.post("/api/addnote/" + noteIdArticle, addNote, function () {
+                        console.log("note is done on Front end")
+                        console.log(noteIdArticle);
 
-                            $.get("/api/allnotes/" + noteIdArticle, function (data) {
-                                    console.log(data)
-                                    for (var k = 0; k < data.note.length; k++) {
+                        $.get("/api/allnotes/" + noteIdArticle, function (data) {
+                                console.log(data)
+                                for (var k = 0; k < data.note.length; k++) {
 
-                                        console.log(data.note[k].body)
-                                        var noteId = data._id
+                                    console.log(data.note[k].body)
+                                    var noteId = data.note[k]._id
 
-                                    var persistTxtBox = $("<div>").attr("id", noteId).attr("data",noteId)
-                                    var xBtn = $("<button>").addClass("x-btn").text("X")
-                                    var pDiv = $("<p>").html(data.note[k].body)
-                                    persistTxtBox.html(pDiv);
-                                    $(".modal-body").prepend(persistTxtBox, xBtn);
-                                }
-                            
-                            });
+                                var persistTxtBox = $("<div>").attr("id", "note-container").attr("data-saved",noteId).append(
+                                $("<p>").html(data.note[k].body),
+                                $("<button>").addClass("x-btn").text("X")
+                                );
+                                $(".modal-body").prepend(persistTxtBox);
+                            }
+                        
+                        });
 
                     });
             });
@@ -108,12 +108,15 @@ $(document).ready(function () {
     });
 
 $(document.body).on("click", ".x-btn", function () {
-    var xId = $(this).siblings("div").attr("data")
+    var xId = $(this).parent("div").attr("data-saved")
     console.log(xId)
 
-    // $.get("api/deletenote/" + ID HERE, function(data){
-    //     console.log("done on front end agin")
-    // });
+    $.get("api/deletenote/" + xId, function(data){
+        console.log("done on front end again")
+        
+    });
+
+    $("." + xId).fadeOut("slow");
 
 });
 //delete a note from article on modal on saved html
@@ -156,3 +159,5 @@ $(document.body).on("click", ".deleteBtn", function (req, res) {
 
 
 });
+
+//write out query to delete notes from db articles 

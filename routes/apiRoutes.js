@@ -161,19 +161,20 @@ app.get("/api/allnotes/:id", function(req, res){
 
 
 //user can delete note from that specific article //STILL NEED TO TEST THIS 
-app.get("api/deletenote/:id", function (res, req){
+app.get("/api/deletenote/:id", function (req, res){
     
-    var noteId = req.params.id
+    var noteId = req.params.id //trying to grab note id  
+    console.log("falalal" +noteId)
 
-    //delete from the Note model or vice versa?
-    //update the Article model 
-    db.Note.deleteOne({_id:noteId}).then(function( res, req){
-        db.Article.findOneAndUpdate({_id: savedArticle},{$set: {note: ""}},{new: true}) 
+    db.Note.deleteOne({"_id":noteId}).then(function( req, res) {
+        //need to make it so that dbArticle deletes that specific one in the arry
+        db.Article.find({"note": noteId},deleteOne(noteId),{new: true})
     }).then(function(dbArticle){
         res.json(dbArticle)
     }).catch(function(err){
         res.json(err)
     });
+
 });
 
 
