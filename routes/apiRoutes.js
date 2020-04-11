@@ -43,10 +43,10 @@ app.get("/api/delete", function(req, res) {
 
  //delete one article from saved html
  app.get("/api/delete/:id", function(req, res) {
-    var id = req.params.id
-    console.log("this is to be delete" + id)
+    var noteId = req.params.id
+    console.log("this is to be delete" + noteId)
 
-    db.Article.deleteOne({"_id": id}, function (err, result) {
+    db.Article.deleteOne({"_id": noteId}, function (err, result) {
          if(err){
              console.log(err)
          }
@@ -163,11 +163,10 @@ app.get("/api/allnotes/:id", function(req, res){
 //user can delete note from that specific article //STILL NEED TO TEST THIS 
 app.get("/api/deletenote/:id", function (req, res){
     
-    var noteId = req.params.id //trying to grab note id  
+    var noteId = req.params.id 
     console.log("falalal" +noteId)
 
     db.Note.deleteOne({"_id":noteId}).then(function(dbNote){
-    }).then(function(dbNote){
         console.log(dbNote);
         res.json(dbNote)
     }).catch(function(err){

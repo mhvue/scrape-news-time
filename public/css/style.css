@@ -1,5 +1,18 @@
 body, .card, .card-header {
-    background-color: pink;
+     background-color:#e7e9eb;
+ } 
+
+ .card-header{
+     background-color: #f1e6c5;
+ }
+
+.jumbotron {
+    background-image: url("../images/prettyBathrm.jpg");
+    background-size: cover;
+}
+
+.display-4, .lead{
+    text-align: right;
 }
 
  #headerP {
@@ -13,8 +26,26 @@ body, .card, .card-header {
 }
 
 
-.addBtn{
+.addBtn, .deleteBtn, .addNote{
     padding: 5px;
     border-radius: 8px;
     width: 130px;
+}
+
+.deleteBtn{
+    margin-left: 10px;
+}
+
+.articlesTable{
+    background-attachment: fixed;
+    background-position: center;
+}
+
+#nothingMsg {
+    font-size: 20px;
+    font-style:italic;
+}
+
+#startInfo{
+    font-weight: bold;
 }

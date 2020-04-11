@@ -1,5 +1,9 @@
 $(document).ready(function () {
+   
+     $("#nothingMsg").show();
+      
     $("#get-button").on("click", function () {
+
         $(".articlesTable").empty();
 
         $.get("/api/scrape").then(function () {
@@ -22,8 +26,8 @@ $(document).ready(function () {
                             $("<button>").addClass("addBtn").text("Add Article"),
                             $("<p>").html("<hr>"));
 
-                        dataNew.attr("id", articleId);
-                        $(".articlesTable").append(dataNew);
+                            dataNew.attr("id", articleId);
+                            $(".articlesTable").append(dataNew);
 
                     } else {
                         var dataNew = $("<div>").append($("<h5>").text(dataTitle).attr("data-title", "title"),
@@ -33,8 +37,8 @@ $(document).ready(function () {
                             $("<button>").addClass("addBtn").text("Add Article"),
                             $("<p>").html("<hr>"));
 
-                        dataNew.attr("id", articleId);
-                        $(".articlesTable").append(dataNew);
+                            dataNew.attr("id", articleId);
+                            $(".articlesTable").append(dataNew);
                     }
                 }
             });
@@ -42,7 +46,6 @@ $(document).ready(function () {
         });
 
     });
-
 
     //saving one article 
     $(document.body).on("click", ".addBtn", function () {
@@ -58,12 +61,8 @@ $(document).ready(function () {
 
     });
 
-
-
     //adding a note to articles that is saved 
-    //click on add note button  
     $(document.body).on("click", ".addNote", function () {
-
             var noteIdArticle = $(this).parent("div").attr("id");
             console.log(noteIdArticle)
             $("#noteModal").modal("toggle");
@@ -73,13 +72,10 @@ $(document).ready(function () {
 
                 var addNote = {
                     body: $("#noteBox").val()
-                }
-
+                };
 
                 $.post("/api/addnote/" + noteIdArticle, addNote, function () {
-                        console.log("note is done on Front end")
-                        console.log(noteIdArticle);
-
+                        
                         $.get("/api/allnotes/" + noteIdArticle, function (data) {
                                 console.log(data)
                                 for (var k = 0; k < data.note.length; k++) {
@@ -89,10 +85,9 @@ $(document).ready(function () {
 
                                 var persistTxtBox = $("<div>").attr("id", noteId).append(
                                 $("<p>").html(data.note[k].body),
-                                $("<button>").addClass("x-btn").text("X")
-                                );
+                                $("<button>").addClass("x-btn").text("x"));
                                 $(".modal-body").prepend(persistTxtBox);
-                            }
+                            };
                         
                         });
 
@@ -100,38 +95,37 @@ $(document).ready(function () {
             });
 
     });
+    //deleting a note
+    $(document.body).on("click", ".x-btn", function () {
+        var xId = $(this).parent("div").attr("id")
+        console.log(xId)
+        $.get("api/deletenote/" + xId, function(data){
+            console.log("done on front end again")
+             });
+        $("#" + xId).fadeOut("slow");
 
-$(document.body).on("click", ".x-btn", function () {
-    var xId = $(this).parent("div").attr("id")
-    console.log(xId)
-    $.get("api/deletenote/" + xId, function(data){
-        console.log("done on front end again")
     });
-    $("#" + xId).fadeOut("slow");
 
-});
-
-//delete all articles from Index.html
-$("#clear-button").on("click", function () {
-    $(".articlesTable").empty();
-    $.get("/api/delete", function () {
-        console.log("done!");
+    //delete all articles from Index.html
+    $("#clear-button").on("click", function () {
+        $(".articlesTable").empty();
+        $.get("/api/delete", function () {
+            console.log("done!");
+        });
+        var newDiv = $("<div>").html("<h5> All Cleared!" + "<br>" +
+            "Start again by clicking Get Articles </h5>");
+        $(".articlesTable").append(newDiv);
     });
-    var newDiv = $("<div>").html("<h5> All Cleared!" + "<br>" +
-        "Start again by clicking Get Articles </h5>");
-    $(".articlesTable").append(newDiv);
-});
 
-//delete one article from  SAVED list 
-$(document.body).on("click", ".deleteBtn", function (req, res) {
-    console.log(this);
-    var deleteArticle = $(this).parent("div").attr("id");
-    $.get("/api/delete/" + deleteArticle, function () {
+    //delete one article from  SAVED list 
+    $(document.body).on("click", ".deleteBtn", function (req, res) {
+        var deleteArticle = $(this).parent("div").attr("id");
+        $.get("/api/delete/" + deleteArticle, function () {
+         });
+
+        $("#" + deleteArticle).fadeOut();
+
     });
-    $("#" + deleteArticle).fadeOut();
-});
 
 
 });
-
-//write out query to delete notes from db articles 
