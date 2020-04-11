@@ -1,10 +1,10 @@
 $(document).ready(function () {
-    $("#get-button").on("click", function () {
+    $("#get-button").on("click",function () {
         $(".articlesTable").empty();
 
-        $.get("/api/scrape", function(){
-
-            $.get("/api/all", function (data) {
+        $.get("/api/scrape").then(function(){
+             
+            $.get("/api/all").then(function (data) {
                  for (var i = 0; i < data.length; i++) {
      
                      var dataTitle = data[i].title;
@@ -39,7 +39,7 @@ $(document).ready(function () {
                      }
                  }
              });
-
+             
         });
 
     });
@@ -71,7 +71,9 @@ $(document.body).on("click", ".addNote", function(){
     
     $("#noteModal").modal("toggle");
 
-    var noteTxtBox= $("<textarea rows='8' cols='50' >").attr("id", "noteBox");
+    var noteTxtBox= $("<textarea rows='8' cols='50'>").attr("id", "noteBox");
+
+    
     $(".modal-body").html(noteTxtBox);
 
     $(".btn-primary").on("click", function(){

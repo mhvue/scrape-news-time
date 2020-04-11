@@ -144,17 +144,17 @@ app.post("/api/addnote/:id", function(req, res){
 });
 
 //users can get ALL notes for that specific article (this is POPULATE)
-app.get("api/allnotes/:id", function(res, req){
+app.get("/api/allnotes/:id", function(res, req){
 
     var savedArticle = req.params.id
-    console.log("getting note id of" + savedArticle)
+    console.log("dfakdjal" + savedArticle)
 
-    // db.Article.findById(savedArticle).populate("note").then(function (dbArticle) {
-    //     res.json(dbArticle);
-    // })
-    // .catch(function(err){
-    //     res.json(err)
-    // });
+    db.Article.findById(savedArticle).populate("note").then(function (dbArticle) {
+        res.json(dbArticle);
+    })
+    .catch(function(err){
+        res.json(err)
+    });
 
 });
 
