@@ -53,7 +53,6 @@ $(document).ready(function () {
             success: function (dataSaved) {
                 $("#" + articleId).fadeOut("slow");
                 $("#savedModal").modal("toggle");
-
             }
         });
 
@@ -67,14 +66,9 @@ $(document).ready(function () {
 
             var noteIdArticle = $(this).parent("div").attr("id");
             console.log(noteIdArticle)
-
             $("#noteModal").modal("toggle");
-
             var noteTxtBox = $("<textarea rows='8' cols='50'>").attr("id", "noteBox");
-
-
             $(".modal-body").html(noteTxtBox);
-
             $(".btn-primary").on("click", function () {
 
                 var addNote = {
@@ -110,49 +104,30 @@ $(document).ready(function () {
 $(document.body).on("click", ".x-btn", function () {
     var xId = $(this).parent("div").attr("id")
     console.log(xId)
-
     $.get("api/deletenote/" + xId, function(data){
         console.log("done on front end again")
     });
-
     $("#" + xId).fadeOut("slow");
 
 });
-//delete a note from article on modal on saved html
-//on click of deleteNote btn 
-// ajax of GET to go to db to delete 
-//alert msg note has been deleted 
-
-
-
 
 //delete all articles from Index.html
 $("#clear-button").on("click", function () {
-
     $(".articlesTable").empty();
-
     $.get("/api/delete", function () {
         console.log("done!");
     });
-
     var newDiv = $("<div>").html("<h5> All Cleared!" + "<br>" +
         "Start again by clicking Get Articles </h5>");
-
     $(".articlesTable").append(newDiv);
-
 });
 
 //delete one article from  SAVED list 
 $(document.body).on("click", ".deleteBtn", function (req, res) {
     console.log(this);
-
     var deleteArticle = $(this).parent("div").attr("id");
-    console.log(deleteArticle);
-
     $.get("/api/delete/" + deleteArticle, function () {
-
     });
-
     $("#" + deleteArticle).fadeOut();
 });
 
