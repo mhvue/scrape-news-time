@@ -64,6 +64,44 @@ $(document).ready(function () {
 
 //adding a note to articles that is saved 
     //click on add note button  
+$(document.body).on("click", ".addNote", function(){
+
+    var noteIdArticle= $(this).parent("div").attr("id");
+    console.log(noteIdArticle)
+    
+    $("#noteModal").modal("toggle");
+
+    var noteTxtBox= $("<textarea rows='8' cols='50' >").attr("id", "noteBox");
+    $(".modal-body").html(noteTxtBox);
+
+    $(".btn-primary").on("click", function(){
+
+        var addNote = {
+            body: $("#noteBox").val()
+        }
+
+        $.post("/api/addnote/" + noteIdArticle, addNote, function(){
+            console.log("note is done on Front end")
+
+            $.get("/api/allnotes/" + noteIdArticle, function(data){
+                console.log(data)
+                // $("#"+ articleId).fadeIn(data);
+            });
+            
+     });
+
+    //  var doneMsg= "Note added!" 
+    //  var notDone = "Sorry, something went wrong. Try again."
+ 
+    //  $("#noteBox").prepend("<h3>"+ doneMsg);
+        
+    });
+
+
+});
+
+
+
     //modal to pop up to:
         //add note in a textbox (need to create a textbox, append to model)
         // then click save to send info to server and DB
@@ -107,7 +145,7 @@ $(document).ready(function () {
 
         });
 
-        $("#"+ deleteArticle).remove();
+        $("#"+ deleteArticle).fadeOut();
      });
 
 

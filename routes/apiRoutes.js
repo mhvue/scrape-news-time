@@ -46,11 +46,12 @@ app.get("/api/delete", function(req, res) {
     var id = req.params.id
     console.log("this is to be delete" + id)
 
-    db.Article.deleteOne({_id: id}, function (err) {
+    db.Article.deleteOne({"_id": id}, function (err, result) {
          if(err){
              console.log(err)
          }
          else{
+            res.send(result)
          console.log("Successful deletion");
          }
        });
@@ -118,16 +119,19 @@ app.put("/api/savearticle/:id", function(req, res){
 
 
 //user can post note associated with that specific article 
-app.post("api/addnote/:id", function(req, res){
+app.post("/api/addnote/:id", function(req, res){
 
-    var note= req.body
+    var note= req.body.body
+    console.log("here is the note" +  note);
     var savedArticle = req.params.id
+    console.log("here is note id" + savedArticle)
 
-    db.Note.create(note).then(function(req, res){
+    db.Note.create({"body": note}).then(function(dbNote){
+        console.log("hit me")
+      
         //if note is successfully created, find that specific article from
         // Article model, and push the new note _id to the Article col. note arrary
-        return db.Article.findOneAndUpdate({_id:savedArticle}, {$push: {note: dbNote._id }},{new: true}); 
-        //how would it know to find that specific article? 
+        return db.Article.findOneAndUpdate({_id:savedArticle}, {$push: {note: dbNote._id }},{new: true}) 
 
     }).then(function(dbArticle){
         res.json(dbArticle);
@@ -136,19 +140,21 @@ app.post("api/addnote/:id", function(req, res){
         res.json(err);
     });
 
+
 });
 
 //users can get ALL notes for that specific article (this is POPULATE)
 app.get("api/allnotes/:id", function(res, req){
 
     var savedArticle = req.params.id
+    console.log("getting note id of" + savedArticle)
 
-    db.Article.findById(savedArticle).populate("note").then(function (dbArticle) {
-        res.json(dbArticle);
-    })
-    .catch(function(err){
-        res.json(err)
-    });
+    // db.Article.findById(savedArticle).populate("note").then(function (dbArticle) {
+    //     res.json(dbArticle);
+    // })
+    // .catch(function(err){
+    //     res.json(err)
+    // });
 
 });
 
