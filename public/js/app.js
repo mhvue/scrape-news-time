@@ -93,7 +93,7 @@ $(document).ready(function () {
                                     console.log(data.note[k].body)
                                     var noteId = data.note[k]._id
 
-                                var persistTxtBox = $("<div>").attr("id", "note-container").attr("data-saved",noteId).append(
+                                var persistTxtBox = $("<div>").attr("id", noteId).append(
                                 $("<p>").html(data.note[k].body),
                                 $("<button>").addClass("x-btn").text("X")
                                 );
@@ -108,15 +108,14 @@ $(document).ready(function () {
     });
 
 $(document.body).on("click", ".x-btn", function () {
-    var xId = $(this).parent("div").attr("data-saved")
+    var xId = $(this).parent("div").attr("id")
     console.log(xId)
 
     $.get("api/deletenote/" + xId, function(data){
         console.log("done on front end again")
-        
     });
 
-    $("." + xId).fadeOut("slow");
+    $("#" + xId).fadeOut("slow");
 
 });
 //delete a note from article on modal on saved html

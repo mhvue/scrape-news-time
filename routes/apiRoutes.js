@@ -168,7 +168,7 @@ app.get("/api/deletenote/:id", function (req, res){
 
     db.Note.deleteOne({"_id":noteId}).then(function( req, res) {
         //need to make it so that dbArticle deletes that specific one in the arry
-        db.Article.find({"note": noteId},deleteOne(noteId),{new: true})
+        return db.Article.find({"note": noteId},deleteOne(noteId),{new: true})
     }).then(function(dbArticle){
         res.json(dbArticle)
     }).catch(function(err){
