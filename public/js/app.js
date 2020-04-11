@@ -78,41 +78,34 @@ $(document.body).on("click", ".addNote", function(){
 
     $(".btn-primary").on("click", function(){
 
-        var addNote = {
-            body: $("#noteBox").val()
-        }
+            var addNote = {
+                body: $("#noteBox").val()
+            }
 
-        $.post("/api/addnote/" + noteIdArticle, addNote, function(){
-            console.log("note is done on Front end")
+         
+            $.post("/api/addnote/" + noteIdArticle, addNote, function(){
+                console.log("note is done on Front end")
+                console.log(noteIdArticle);
 
-            $.get("/api/allnotes/" + noteIdArticle, function(data){
-                console.log(data)
-                // $("#"+ articleId).fadeIn(data);
+                $.get("/api/allnotes/"+ noteIdArticle, function(data){
+             console.log(data)
+                    for(var k = 0; k < data.note.length;k++) {
+
+                        console.log(data.note[k].body)
+                    var persistTxtBox= $("<div>").attr("id", "persistBox");
+                    var pDiv = $("<p>").html( data.note[k].body)
+                    persistTxtBox.html(pDiv);
+                    $(".modal-body").prepend(persistTxtBox);
+                    }
+              
             });
             
-     });
-
-    //  var doneMsg= "Note added!" 
-    //  var notDone = "Sorry, something went wrong. Try again."
- 
-    //  $("#noteBox").prepend("<h3>"+ doneMsg);
-        
+            });
+         });
+            
     });
 
-
-});
-
-
-
-    //modal to pop up to:
-        //add note in a textbox (need to create a textbox, append to model)
-        // then click save to send info to server and DB
-            //post to the api route 
-        // display all notes entered 
-            //(example doesn't display right away..happens after a click again)
-            //display option to delete
     
-
 //delete a note from article on modal on saved html
      //on click of deleteNote btn 
      // ajax of GET to go to db to delete 
@@ -131,7 +124,8 @@ $(document.body).on("click", ".addNote", function(){
         });
 
         var newDiv = $("<div>").html("<h5> All Cleared!" + "<br>" +
-        "Start again by clicking Get Articles </h5>")
+        "Start again by clicking Get Articles </h5>");
+
         $(".articlesTable").append(newDiv);
         
      });
@@ -140,8 +134,8 @@ $(document.body).on("click", ".addNote", function(){
      $(document.body).on("click", ".deleteBtn",function(req, res){
         console.log(this);
         
-        var deleteArticle= $(this).parent("div").attr("id")
-        console.log(deleteArticle)
+        var deleteArticle= $(this).parent("div").attr("id");
+        console.log(deleteArticle);
 
         $.get("/api/delete/" + deleteArticle, function(){
 

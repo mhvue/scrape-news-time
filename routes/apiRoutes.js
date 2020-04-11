@@ -144,7 +144,7 @@ app.post("/api/addnote/:id", function(req, res){
 });
 
 //users can get ALL notes for that specific article (this is POPULATE)
-app.get("/api/allnotes/:id", function(res, req){
+app.get("/api/allnotes/:id", function(req, res){
 
     var savedArticle = req.params.id
     console.log("dfakdjal" + savedArticle)
