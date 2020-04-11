@@ -2,7 +2,7 @@ body, .card, .card-header {
      background-color:#e7e9eb;
  } 
 
- .card-header{
+ .card-header, .saveTable, .articlesTable{
      background-color: #f1e6c5;
  }
 
@@ -30,11 +30,44 @@ body, .card, .card-header {
     padding: 5px;
     border-radius: 8px;
     width: 130px;
+
+      
+}
+
+:hover.addBtn{
+    font-weight: bold;
 }
 
 .deleteBtn{
     margin-left: 10px;
 }
+
+:hover.deleteBtn{
+    font-weight: bold;
+}
+
+:hover.addNote{
+    font-weight: bold;
+}
+
+#save-button, #get-button, #clear-button, #home-button{
+    background-color: #dea5ac;
+    color: black;
+}
+
+:hover#save-button{
+    font-weight: bold;
+}
+:hover#get-button{
+    font-weight: bold;
+}
+:hover#clear-button{
+    font-weight: bold;
+}
+:hover#home-button{
+    font-weight: bold;
+}
+
 
 .articlesTable{
     background-attachment: fixed;

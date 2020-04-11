@@ -55,8 +55,6 @@ app.get("/api/delete", function(req, res) {
          console.log("Successful deletion");
          }
        });
- 
-
  });
 
 
@@ -112,11 +110,7 @@ app.put("/api/savearticle/:id", function(req, res){
     .catch(function(err){
         res.json(err)
     });
-
-
-    
 });
-
 
 //user can post note associated with that specific article 
 app.post("/api/addnote/:id", function(req, res){
@@ -139,8 +133,6 @@ app.post("/api/addnote/:id", function(req, res){
     .catch(function(err){
         res.json(err);
     });
-
-
 });
 
 //users can get ALL notes for that specific article (this is POPULATE)
@@ -158,9 +150,7 @@ app.get("/api/allnotes/:id", function(req, res){
 
 });
 
-
-
-//user can delete note from that specific article //STILL NEED TO TEST THIS 
+//user can delete note from that specific article
 app.get("/api/deletenote/:id", function (req, res){
     
     var noteId = req.params.id 

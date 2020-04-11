@@ -45,6 +45,9 @@ $(document).ready(function () {
 
         });
 
+        $(".articlesTable").empty();
+
+
     });
 
     //saving one article 
@@ -61,6 +64,8 @@ $(document).ready(function () {
 
     });
 
+   
+
     //adding a note to articles that is saved 
     $(document.body).on("click", ".addNote", function () {
             var noteIdArticle = $(this).parent("div").attr("id");
@@ -68,6 +73,7 @@ $(document).ready(function () {
             $("#noteModal").modal("toggle");
             var noteTxtBox = $("<textarea rows='8' cols='50'>").attr("id", "noteBox");
             $(".modal-body").html(noteTxtBox);
+
             $(".btn-primary").on("click", function () {
 
                 var addNote = {
@@ -86,12 +92,17 @@ $(document).ready(function () {
                                 var persistTxtBox = $("<div>").attr("id", noteId).append(
                                 $("<p>").html(data.note[k].body),
                                 $("<button>").addClass("x-btn").text("x"));
+
+    
                                 $(".modal-body").prepend(persistTxtBox);
+                                $("#noteBox").val("");
                             };
                         
                         });
 
                     });
+
+                    $(".modal-body").prepend(persistTxtBox);
             });
 
     });
