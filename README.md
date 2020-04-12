@@ -5,12 +5,12 @@ Staying informed of all things health and beauty experts and hollywood stars fro
 
 <p align ="center">We now have articles from People.com to look over. There is title, short summary, and link to read more about the article.<br><br><img src= "public/images/getArticles.png" width="600px"></p> 
 
-<p align ="center">Article can be saved. <br><br><img src= "public/images/addArticle.png"></p> 
+<p align ="center">Article can be saved.<img src= "public/images/addArticle.png"></p> 
 
 
-<p align ="center">When you click on "View Saved Articles", you will see this. You will have an option to add a note and delete the article.<br><br><img src= "public/images/savedhtml.png" width="600px"></p> 
+<p align ="center">When you click on "View Saved Articles", you will see this. You will have an option to add a note and delete the article.<img src= "public/images/savedhtml.png" width="600px"></p> 
 
-<p align ="center">Add in your note and see other users notes.<br><br><img src= "public/images/addYourNote.png"><img src="public/images/seeOtherNotes.png" width="400px" ></p> 
+<p align ="center">Add in your note.<img src= "public/images/addYourNote.png"> You can see other users notes.<img src="public/images/seeOtherNotes.png" width="400px" ></p> 
 
 
 ## Technologies Used:
