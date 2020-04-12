@@ -4,7 +4,7 @@ $(document).ready(function () {
       
     $("#get-button").on("click", function (event) {
         event.preventDefault();
-        
+
         $(".articlesTable").empty();
 
         $.get("/api/scrape").then(function () {
@@ -44,15 +44,10 @@ $(document).ready(function () {
                 }
             });
 
-            $(".articlesTable").empty();
         });
-
-        
-
-
     });
 
-    //saving one article 
+    //saving one article by updating save to true
     $(document.body).on("click", ".addBtn", function () {
         var articleId = $(this).parent("div").attr("id");
         $.ajax({
@@ -65,8 +60,6 @@ $(document).ready(function () {
         });
 
     });
-
-   
 
     //adding a note to articles that is saved 
     $(document.body).on("click", ".addNote", function () {
@@ -85,20 +78,17 @@ $(document).ready(function () {
                 $.post("/api/addnote/" + noteIdArticle, addNote, function () {
                         
                         $.get("/api/allnotes/" + noteIdArticle, function (data) {
-                                console.log(data)
-                                for (var k = 0; k < data.note.length; k++) {
+                            
+                            for (var k = 0; k < data.note.length; k++) {
+                                
+                                var noteBody=data.note[k].body;
+                                var noteId = data.note[k]._id
 
-                                    console.log(data.note[k].body)
-                                    var noteId = data.note[k]._id
-
-                                var persistTxtBox = $("<div>").attr("id", noteId).addClass("savednotes")
-                                .append(
-                                $("<p>").html(data.note[k].body),
-                                $("<button>").addClass("x-btn").text("x"));
-
-    
-                                $(".modal-body").prepend("<br>").prepend(persistTxtBox)
-                                $("#noteBox").val("");
+                            var persistTxtBox = $("<div>").attr("id", noteId).addClass("savednotes").append(
+                            $("<p>").html(noteBody),
+                            $("<button>").addClass("x-btn").text("x"));
+                            $(".modal-body").prepend("<br>").prepend(persistTxtBox);
+                            $("#noteBox").val("");
                             };
                         
                         });
@@ -124,7 +114,7 @@ $(document).ready(function () {
         $.get("/api/delete", function () {
             console.log("done!");
         });
-        var newDiv = $("<div>").html("<h5> All Cleared!" + "<br>" +
+        var newDiv = $("<div>").html("<br> <h5> All Cleared!" + "<br>" +
             "Start again by clicking Get Articles </h5>");
         $(".articlesTable").append(newDiv);
     });
