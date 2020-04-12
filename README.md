@@ -1,6 +1,8 @@
 # Scrape-news-time
 Staying informed of all things health and beauty experts and hollywood stars from People.com via webscraping.
 
+Check it out: https://agile-taiga-56775.herokuapp.com/ 
+
 <p align ="center">Click Get Articles to start<br><img src= "public/images/buttons.png"></p>
 
 <p align ="center">We now have articles from People.com to look over. There is title, short summary, and link to read more about the article.<br><img src= "public/images/getArticles.png" width="600px"></p> 
