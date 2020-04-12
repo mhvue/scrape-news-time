@@ -2,8 +2,16 @@ body, .card, .card-header {
      background-color:#e7e9eb;
  } 
 
+ body{
+    background-attachment: fixed;
+ }
+
  .card-header, .saveTable, .articlesTable{
      background-color: #f1e6c5;
+ }
+
+ .articlesTable, .saveTable {
+    font-family: 'Nanum Myeongjo', serif;
  }
 
 .jumbotron {
@@ -30,8 +38,6 @@ body, .card, .card-header {
     padding: 5px;
     border-radius: 8px;
     width: 130px;
-
-      
 }
 
 :hover.addBtn{
@@ -53,6 +59,11 @@ body, .card, .card-header {
 #save-button, #get-button, #clear-button, #home-button{
     background-color: #dea5ac;
     color: black;
+    
+}
+
+#save-button, #get-button, #clear-button{
+    margin-right: 15px;
 }
 
 :hover#save-button{
@@ -81,4 +92,20 @@ body, .card, .card-header {
 
 #startInfo{
     font-weight: bold;
+}
+
+.infoDiv{
+    position: relative;
+    top:60px;
+    
+}
+.savednotes{
+    border: 1px solid;
+}
+
+/* obtained from stack overflow */
+.x-btn{ 
+    margin-right: 0;
+    margin-left: auto;
+    display: block;
 }

@@ -14,10 +14,10 @@
         <h1 class="display-4">Your Saved Articles</h1>
         <p class="lead">See your saved articles below</p>
         <div class="text-center"><hr class="my-4">
-            <div class="text-center">
-                <p class="startInfo">Add any comments, delete the articles, and delete comments.</p>
+            <div class="text-center infoDiv">
+                <h5>You can add notes, delete the articles, and delete notes.</h5>
 
-                <a class="btn btn-primary btn-lg" href="/" id="home-button" role="button">Home</a>
+                <a class="btn btn-primary btn-lg" href="index.html" id="home-button" role="button">Home</a>
                 </div>
                 <br>
             </div>
@@ -44,7 +44,7 @@
           </button>
         </div>
         <div class="modal-body">
-          ...
+          <br>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -76,7 +76,7 @@
                 if(savedSummary == "") {
                     var nullMsg= "Sorry, no summary at this time. Click link for more"
 
-                    var savedNew= $("<div>").append($("<h5>").text(savedTitle).attr("data-savedTitle", "title"),
+                    var savedNew= $("<div>").append($("<h4>").text(savedTitle).attr("data-savedTitle", "title"),
                         $("<p>").text(nullMsg).attr("data-savedSummary", "summary"),
                         $("<p>").html("<a href='" + savedLink +
                             "'target='_blank'> Read more about article here</a>").attr("data-savedLink", "link"),
@@ -89,7 +89,7 @@
                         $(".saveTable").append(savedNew);
                 }
                 else {
-                    var savedNew= $("<div>").append($("<h5>").text(savedTitle).attr("data-savedTitle", "title"),
+                    var savedNew= $("<div>").append($("<h4>").text(savedTitle).attr("data-savedTitle", "title"),
                         $("<p>").text(savedSummary).attr("data-savedSummary", "summary"),
                         $("<p>").html("<a href='" + savedLink +
                             "'target='_blank'> Read more about article here</a>").attr("data-savedLink", "link"),

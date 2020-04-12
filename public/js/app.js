@@ -19,7 +19,7 @@ $(document).ready(function () {
                     if (dataSummary == "") {
                         var nullMsg = "Sorry, no summary at this time. Click link for more"
 
-                        var dataNew = $("<div>").append($("<h5>").text(dataTitle).attr("data-title", "title"),
+                        var dataNew = $("<div>").append($("<h4>").text(dataTitle).attr("data-title", "title"),
                             $("<p>").text(nullMsg).attr("data-summary", "summary"),
                             $("<p>").html("<a href='" + dataLink +
                                 "'target='_blank'> Read more about article here</a>").attr("data-link", "link"),
@@ -30,7 +30,7 @@ $(document).ready(function () {
                             $(".articlesTable").append(dataNew);
 
                     } else {
-                        var dataNew = $("<div>").append($("<h5>").text(dataTitle).attr("data-title", "title"),
+                        var dataNew = $("<div>").append($("<h4>").text(dataTitle).attr("data-title", "title"),
                             $("<p>").text(dataSummary).attr("data-summary", "summary"),
                             $("<p>").html("<a href='" + dataLink +
                                 "' target='_blank' > Read more about article here</a>").attr("data-link", "link"),
@@ -43,9 +43,10 @@ $(document).ready(function () {
                 }
             });
 
+            $(".articlesTable").empty();
         });
 
-        $(".articlesTable").empty();
+        
 
 
     });
@@ -89,20 +90,20 @@ $(document).ready(function () {
                                     console.log(data.note[k].body)
                                     var noteId = data.note[k]._id
 
-                                var persistTxtBox = $("<div>").attr("id", noteId).append(
+                                var persistTxtBox = $("<div>").attr("id", noteId).addClass("savednotes")
+                                .append(
                                 $("<p>").html(data.note[k].body),
                                 $("<button>").addClass("x-btn").text("x"));
 
     
-                                $(".modal-body").prepend(persistTxtBox);
+                                $(".modal-body").prepend("<br>").prepend(persistTxtBox)
                                 $("#noteBox").val("");
                             };
                         
                         });
 
                     });
-
-                    $(".modal-body").prepend(persistTxtBox);
+                  
             });
 
     });
