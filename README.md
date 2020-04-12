@@ -10,7 +10,9 @@ Staying informed of all things health and beauty experts and hollywood stars fro
 
 <p align ="center">When you click on "View Saved Articles", you will see this. You will have an option to add a note and delete the article.<img src= "public/images/savedhtml.png" width="600px"></p> 
 
-<p align ="center">Add in your note.<img src= "public/images/addYourNote.png"> You can see other users notes.<img src="public/images/seeOtherNotes.png" width="400px" ></p> 
+<p align ="center">Add in your note.<img src="public/images/addYourNote.png" width="600px"></p> 
+
+<p align ="center">You can see other users notes.<img src="public/images/seeOtherNotes.png" width="400px" ></p> 
 
 
 ## Technologies Used:
