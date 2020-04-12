@@ -31,9 +31,9 @@ Check it out: https://agile-taiga-56775.herokuapp.com/
 
 ## To Do
 * Displaying Added Notes<br>
-Still note quite ready. While it does add a note and a user can view the notes, there is glitch causing the notes to duplicate or make a few copies tthe note, then it is displayed. By refreshing the page, it helps but does not solve the problem. Minor css still need as well for better displaying purposes. 
+Still note quite ready. While it does add a note and a user can view the notes, there is glitch causing the notes to duplicate or make a few copies of the note which is displayed. By refreshing the page, it seems to help with this issue. Minor css still need as well for better displaying purposes. 
 * Scrape and Get not workng togther<br>
-There is lag when click in Get Articles. The servier is scraping and then will run ajax of GET to display but a second click is needed.
+There is lag when clicking on Get Articles. The server is scraping and then will run ajax of GET to display. However, a second click is sometimes needed.
 * Mobile Friendly<br>
 While bootstrap helped, some minor issues need to fix to make application more mobile-friendly. 
 
