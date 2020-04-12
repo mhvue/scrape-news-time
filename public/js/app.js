@@ -2,8 +2,9 @@ $(document).ready(function () {
    
      $("#nothingMsg").show();
       
-    $("#get-button").on("click", function () {
-
+    $("#get-button").on("click", function (event) {
+        event.preventDefault();
+        
         $(".articlesTable").empty();
 
         $.get("/api/scrape").then(function () {
