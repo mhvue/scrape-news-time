@@ -58,6 +58,7 @@ body, .card, .card-header {
 
 #save-button, #get-button, #clear-button, #home-button{
     background-color: #dea5ac;
+    border-color:#dea5ac;
     color: black;
     
 }

@@ -23,7 +23,7 @@ $(document).ready(function () {
                             $("<p>").text(nullMsg).attr("data-summary", "summary"),
                             $("<p>").html("<a href='" + dataLink +
                                 "'target='_blank'> Read more about article here</a>").attr("data-link", "link"),
-                            $("<button>").addClass("addBtn").text("Add Article"),
+                            $("<button>").addClass("addBtn").text("Save Article"),
                             $("<p>").html("<hr>"));
 
                             dataNew.attr("id", articleId);
@@ -34,7 +34,7 @@ $(document).ready(function () {
                             $("<p>").text(dataSummary).attr("data-summary", "summary"),
                             $("<p>").html("<a href='" + dataLink +
                                 "' target='_blank' > Read more about article here</a>").attr("data-link", "link"),
-                            $("<button>").addClass("addBtn").text("Add Article"),
+                            $("<button>").addClass("addBtn").text("Save Article"),
                             $("<p>").html("<hr>"));
 
                             dataNew.attr("id", articleId);
@@ -70,7 +70,7 @@ $(document).ready(function () {
     //adding a note to articles that is saved 
     $(document.body).on("click", ".addNote", function () {
             var noteIdArticle = $(this).parent("div").attr("id");
-            console.log(noteIdArticle)
+           
             $("#noteModal").modal("toggle");
             var noteTxtBox = $("<textarea rows='8' cols='50'>").attr("id", "noteBox");
             $(".modal-body").html(noteTxtBox);
@@ -110,7 +110,6 @@ $(document).ready(function () {
     //deleting a note
     $(document.body).on("click", ".x-btn", function () {
         var xId = $(this).parent("div").attr("id")
-        console.log(xId)
         $.get("api/deletenote/" + xId, function(data){
             console.log("done on front end again")
              });
