@@ -64,36 +64,36 @@ $(document).ready(function () {
     //adding a note to articles that is saved 
     $(document.body).on("click", ".addNote", function () {
             var noteIdArticle = $(this).parent("div").attr("id");
-           
             $("#noteModal").modal("toggle");
             var noteTxtBox = $("<textarea rows='8' cols='50'>").attr("id", "noteBox");
             $(".modal-body").html(noteTxtBox);
+            
 
             $(".btn-primary").on("click", function () {
-
                 var addNote = {
                     body: $("#noteBox").val()
                 };
 
                 $.post("/api/addnote/" + noteIdArticle, addNote, function () {
-                        
                         $.get("/api/allnotes/" + noteIdArticle, function (data) {
-                            
                             for (var k = 0; k < data.note.length; k++) {
-                                
                                 var noteBody=data.note[k].body;
                                 var noteId = data.note[k]._id
 
-                            var persistTxtBox = $("<div>").attr("id", noteId).addClass("savednotes").append(
-                            $("<p>").html(noteBody),
-                            $("<button>").addClass("x-btn").text("x"));
+                             var persistTxtBox = $("<div>").attr("id", noteId).addClass("savednotes").append(
+                                $("<p>").html(noteBody),
+                                $("<button>").addClass("x-btn").text("x")
+                                );
                             $(".modal-body").prepend("<br>").prepend(persistTxtBox);
                             $("#noteBox").val("");
                             };
                         
                         });
 
+
                     });
+
+        
                   
             });
 

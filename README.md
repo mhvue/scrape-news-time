@@ -29,9 +29,9 @@ Check it out: https://agile-taiga-56775.herokuapp.com/
 * Axios
 * Cheerio
 
-## To Do
+## To Do as of 8/11/20
 * Displaying Added Notes<br>
-Still note quite ready. While it does add a note and a user can view the notes, there is glitch causing the notes to duplicate or make a few copies of the note which is displayed. By refreshing the page, it seems to help with this issue. Minor css still need as well for better displaying purposes. 
+While it does add a note and a user can view the notes, there is glitch causing the notes to duplicate or make a few copies of the note which is displayed. By refreshing the page, it seems to help with this issue. Minor css still need as well for better displaying purposes. 
 * Scrape and Get not workng togther<br>
 There is lag when clicking on Get Articles. The server is scraping and then will run ajax of GET to display. However, a second click is sometimes needed.
 * Mobile Friendly<br>

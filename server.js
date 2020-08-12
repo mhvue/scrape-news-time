@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost/scrapenewsdb", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost/scrapenewsdb", { useUnifiedTopology: true, useNewUrlParser: true });
 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapenewsdb";
 
