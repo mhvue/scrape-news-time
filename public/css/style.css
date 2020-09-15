@@ -34,7 +34,7 @@ body, .card, .card-header {
 }
 
 
-.addBtn, .deleteBtn, .addNote{
+.addBtn, .deleteBtn, .addNote, .viewNotes{
     padding: 5px;
     border-radius: 8px;
     width: 130px;
@@ -44,7 +44,7 @@ body, .card, .card-header {
     font-weight: bold;
 }
 
-.deleteBtn{
+.deleteBtn, .viewNotes{
     margin-left: 10px;
 }
 
@@ -109,4 +109,9 @@ body, .card, .card-header {
     margin-right: 0;
     margin-left: auto;
     display: block;
+}
+
+.viewBody{
+    margin-left: 10px;
+    margin-right: 10px;
 }

@@ -2,14 +2,13 @@ $(document).ready(function () {
    
      $("#nothingMsg").show();
       
-    $("#get-button").on("click", function (event) {
-        event.preventDefault();
-
+    $("#get-button").on("click", function () {
         $(".articlesTable").empty();
-
+        //1st scrape 
         $.get("/api/scrape").then(function () {
-
-            $.get("/api/all").then(function (data) {
+        //2nd run GET to get all scraped articles 
+            $.get("/api/all").then(function(data) {
+                console.log(data)
                 for (var i = 0; i < data.length; i++) {
 
                     var dataTitle = data[i].title;
@@ -63,50 +62,64 @@ $(document).ready(function () {
 
     //adding a note to articles that is saved 
     $(document.body).on("click", ".addNote", function () {
+            //getting the id of that specific article
             var noteIdArticle = $(this).parent("div").attr("id");
+            console.log("yoooo:" + noteIdArticle)
+            //have the modal toggle
             $("#noteModal").modal("toggle");
+            //comment text area created 
             var noteTxtBox = $("<textarea rows='8' cols='50'>").attr("id", "noteBox");
             $(".modal-body").html(noteTxtBox);
-            
 
             $(".btn-primary").on("click", function () {
                 var addNote = {
                     body: $("#noteBox").val()
                 };
 
-                $.post("/api/addnote/" + noteIdArticle, addNote, function () {
-                        $.get("/api/allnotes/" + noteIdArticle, function (data) {
-                            for (var k = 0; k < data.note.length; k++) {
-                                var noteBody=data.note[k].body;
-                                var noteId = data.note[k]._id
-
-                             var persistTxtBox = $("<div>").attr("id", noteId).addClass("savednotes").append(
-                                $("<p>").html(noteBody),
-                                $("<button>").addClass("x-btn").text("x")
-                                );
-                            $(".modal-body").prepend("<br>").prepend(persistTxtBox);
-                            $("#noteBox").val("");
-                            };
-                        
-                        });
-
-
-                    });
-
-        
-                  
+                $.post("/api/addnote/" + noteIdArticle, addNote, function (data,status) {
+                    console.log(data,status)
+                    //clear the text box after pressing enter
+                    $("#noteBox").val(" ").before("<h2>Added!</h2>")       
+                });     
             });
 
+            
     });
-    //deleting a note
-    $(document.body).on("click", ".x-btn", function () {
-        var xId = $(this).parent("div").attr("id")
-        $.get("api/deletenote/" + xId, function(data){
-            console.log("done on front end again")
-             });
-        $("#" + xId).fadeOut("slow");
+
+    $(document.body).on("click",".viewNotes", function(){
+       // view notes 
+       var noteIdArticle = $(this).parent("div").attr("id");
+       $("#viewNotesModal").modal("toggle");
+
+            $.get("/api/allnotes/" + noteIdArticle, function (data) {
+                console.log(data)
+                for (var k = 0; k < data.note.length; k++) {
+                    var noteBody=data.note[k].body;
+                    var noteId = data.note[k]._id
+
+                 var persistTxtBox = $("<div>").attr("id", noteId).addClass("savednotes").append(
+                    $("<p>").html(noteBody),
+                    $("<button>").addClass("x-btn").text("x"));
+
+                $("#viewSpan").prepend("<br>",persistTxtBox);
+                };
+            });
+
+             //deleting a note
+            $(document.body).on("click", ".x-btn", function () {
+                //get the id of the article  
+                var xId = $(this).parent("div").attr("id");
+
+                $("#" + xId).fadeOut("slow");
+
+                $.get("api/deletenote/" + xId, function(data, status){
+                    console.log("delete status:" + status)
+                });
 
     });
+    })
+   
+   
 
     //delete all articles from Index.html
     $("#clear-button").on("click", function () {
