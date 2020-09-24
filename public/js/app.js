@@ -65,30 +65,30 @@ $(document).ready(function () {
             //getting the id of that specific article
             var noteIdArticle = $(this).parent("div").attr("id");
             console.log("yoooo:" + noteIdArticle)
-            //have the modal toggle
+            //have the modal show to allow user to add a note 
             $("#noteModal").modal("toggle");
-            //comment text area created 
+            //comment textarea created 
             var noteTxtBox = $("<textarea rows='8' cols='50'>").attr("id", "noteBox");
+            //in modal-body, have text area there 
             $(".modal-body").html(noteTxtBox);
-
+            //click on button to add a note 
             $(".btn-primary").on("click", function () {
                 var addNote = {
                     body: $("#noteBox").val()
                 };
-
+                //send enter note to this endpt to update db 
                 $.post("/api/addnote/" + noteIdArticle, addNote, function (data,status) {
                     console.log(data,status)
-                    //clear the text box after pressing enter
+                    //clear the text box after posting and show words Added to user 
                     $("#noteBox").val(" ").before("<h2>Added!</h2>")       
                 });     
             });
-
-            
     });
 
+    // view notes 
     $(document.body).on("click",".viewNotes", function(){
-       // view notes 
        var noteIdArticle = $(this).parent("div").attr("id");
+       var persistTxtBox;
        $("#viewNotesModal").modal("toggle");
 
             $.get("/api/allnotes/" + noteIdArticle, function (data) {
@@ -97,12 +97,13 @@ $(document).ready(function () {
                     var noteBody=data.note[k].body;
                     var noteId = data.note[k]._id
 
-                 var persistTxtBox = $("<div>").attr("id", noteId).addClass("savednotes").append(
+                     persistTxtBox = $("<div>").attr("id", noteId).addClass("savednotes").append(
                     $("<p>").html(noteBody),
                     $("<button>").addClass("x-btn").text("x"));
 
-                $("#viewSpan").prepend("<br>",persistTxtBox);
+                    $("#viewSpan").prepend("<br>",persistTxtBox);
                 };
+
             });
 
              //deleting a note
@@ -116,7 +117,7 @@ $(document).ready(function () {
                     console.log("delete status:" + status)
                 });
 
-    });
+            });
     })
    
    

@@ -85,8 +85,9 @@
     // }
       //get ALL the saved articles 
         $.get("/api/allsaved", function (data) {
+            console.log(data)
+
             for (var j = 0; j < data.length; j++) {
-                console.log(data)
                 var savedTitle = data[j].title;
                 var savedSummary = data[j].summary;
                 var savedLink = data[j].link;

@@ -40,7 +40,7 @@ body, .card, .card-header {
     width: 130px;
 }
 
-:hover.addBtn{
+:hover.addBtn, :hover.deleteBtn, :hover.addNote, :hover.viewNotes{
     font-weight: bold;
 }
 
@@ -48,13 +48,6 @@ body, .card, .card-header {
     margin-left: 10px;
 }
 
-:hover.deleteBtn{
-    font-weight: bold;
-}
-
-:hover.addNote{
-    font-weight: bold;
-}
 
 #save-button, #get-button, #clear-button, #home-button{
     background-color: #dea5ac;
@@ -67,19 +60,9 @@ body, .card, .card-header {
     margin-right: 15px;
 }
 
-:hover#save-button{
+:hover#save-button, :hover#get-button, :hover#home-button, :hover#clear-button{
     font-weight: bold;
 }
-:hover#get-button{
-    font-weight: bold;
-}
-:hover#clear-button{
-    font-weight: bold;
-}
-:hover#home-button{
-    font-weight: bold;
-}
-
 
 .articlesTable{
     background-attachment: fixed;
