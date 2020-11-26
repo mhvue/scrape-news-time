@@ -85,24 +85,29 @@
     // }
       //get ALL the saved articles 
         $.get("/api/allsaved", function (data) {
-            console.log(data)
-
+      
             for (var j = 0; j < data.length; j++) {
-                var savedTitle = data[j].title;
-                var savedSummary = data[j].summary;
-                var savedLink = data[j].link;
-                var savedId= data[j]._id;
-                
-                if(savedSummary == "") {
-                    var nullMsg= "Sorry, no summary at this time. Click link for more"
 
-                    var savedNew= $("<div>").append($("<h4>").text(savedTitle).attr("data-savedTitle", "title"),
-                        $("<p>").text(nullMsg).attr("data-savedSummary", "summary"),
-                        $("<p>").html("<a href='" + savedLink +
-                            "'target='_blank'> Read more about article here</a>").attr("data-savedLink", "link"),
-                        $("<button>").addClass("addNote").text("Add Note"),
-                        $("<button>").addClass("viewNotes").text("View Notes"),
-                        $("<button>").addClass("deleteBtn").text("Delete Article"),
+               var savedTitle = $("<h4>").text(data[j].title).attr("data-savedTitle", "title");
+                var savedSummary = $("<p>").text(data[j].summary).attr("data-savedSummary", "summary");
+                var savedLink = $("<p>").html("<a href='" + data[j].link +
+                            "'target='_blank'> Read more about article here</a>").attr("data-savedLink", "link");
+                var savedId= data[j]._id;
+                  
+            
+                var addNoteBtn= $("<button>").addClass("addNote").text("Add Note");
+                var viewNoteBtn= $("<button>").addClass("viewNotes").text("View Notes");
+                var deleteNoteBtn= $("<button>").addClass("deleteBtn").text("Delete Article");
+                // var savedTitle = data[j].title;
+                // var savedSummary = data[j].summary;
+                // var savedLink = data[j].link;
+                // var savedId= data[j]._id;
+                
+                if(data[j].summary == "") {
+                    var nullMsg = $("<p>").text("Sorry, no summary at this time. Click link for more").attr("data-savedSummary", "summary");
+
+                    var savedNew= $("<div>").append(savedTitle,nullMsg,savedLink,
+                        addNoteBtn,viewNoteBtn,deleteNoteBtn,
                         $("<div>").html("<hr>") );
 
                         savedNew.attr("id", savedId);
@@ -110,13 +115,8 @@
                         $(".saveTable").append(savedNew);
                 }
                 else {
-                    var savedNew= $("<div>").append($("<h4>").text(savedTitle).attr("data-savedTitle", "title"),
-                        $("<p>").text(savedSummary).attr("data-savedSummary", "summary"),
-                        $("<p>").html("<a href='" + savedLink +
-                            "'target='_blank'> Read more about article here</a>").attr("data-savedLink", "link"),
-                        $("<button>").addClass("addNote").text("Add Note"),
-                        $("<button>").addClass("viewNotes").text("View Notes"),
-                        $("<button>").addClass("deleteBtn").text("Delete Article"),
+                    var savedNew= $("<div>").append(savedTitle,savedSummary,savedLink,
+                        addNoteBtn,viewNoteBtn,deleteNoteBtn,
                         $("<div>").html("<hr>") );
 
                         savedNew.attr("id", savedId);
