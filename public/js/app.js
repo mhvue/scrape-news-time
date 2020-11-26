@@ -6,35 +6,30 @@ $(document).ready(function () {
         $(".articlesTable").empty();
         //1st scrape 
         $.get("/api/scrape").then(function () {
+           
         //2nd run GET to get all scraped articles 
-            $.get("/api/all").then(function(data) {
-                console.log(data)
-                for (var i = 0; i < data.length; i++) {
+            $.get("/api/all").then(function(data, status) {
+                console.log(data, status)
+                for (var i = 0; i < 10; i++) {
 
-                    var dataTitle = data[i].title;
-                    var dataLink = data[i].link;
-                    var dataSummary = data[i].summary;
+                    var dataTitle= $("<h4>").text(data[i].title).attr("data-title", "title");
+                    var dataLink = $("<p>").html("<a href='" + data[i].link +
+                    "'target='_blank'> Read more about article here</a>").attr("data-link", "link");
+                    var dataSummary = $("<p>").text(data[i].summary).attr("data-summary", "summary");
                     var articleId = data[i]._id;
+                    var saveArticleBtn = $("<button>").addClass("addBtn").text("Save Article");
 
-                    if (dataSummary == "") {
-                        var nullMsg = "Sorry, no summary at this time. Click link for more"
+                    if (data[i].summary == "") {
+                        var nullMsg=  $("<p>").text("Sorry, no summary at this time. Click link for more").attr("data-summary", "summary");
 
-                        var dataNew = $("<div>").append($("<h4>").text(dataTitle).attr("data-title", "title"),
-                            $("<p>").text(nullMsg).attr("data-summary", "summary"),
-                            $("<p>").html("<a href='" + dataLink +
-                                "'target='_blank'> Read more about article here</a>").attr("data-link", "link"),
-                            $("<button>").addClass("addBtn").text("Save Article"),
+                        var dataNew = $("<div>").append(dataTitle,nullMsg,dataLink,saveArticleBtn,
                             $("<p>").html("<hr>"));
 
                             dataNew.attr("id", articleId);
                             $(".articlesTable").append(dataNew);
 
                     } else {
-                        var dataNew = $("<div>").append($("<h4>").text(dataTitle).attr("data-title", "title"),
-                            $("<p>").text(dataSummary).attr("data-summary", "summary"),
-                            $("<p>").html("<a href='" + dataLink +
-                                "' target='_blank' > Read more about article here</a>").attr("data-link", "link"),
-                            $("<button>").addClass("addBtn").text("Save Article"),
+                        var dataNew = $("<div>").append(dataTitle,dataSummary,dataLink,saveArticleBtn,
                             $("<p>").html("<hr>"));
 
                             dataNew.attr("id", articleId);

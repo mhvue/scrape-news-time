@@ -15,13 +15,11 @@ app.get("/api/scrape", function(req, res){
            results.title =$(element).children(".category-page-item-content").children("a").find(".category-page-item-title").text();
             results.summary = $(element).children(".category-page-item-content").children(".category-page-item-description").text();
 
-        
             db.Article.create(results).then(function(dbArticle){
               console.log(dbArticle);
             })
             .catch(function(err){
                 console.log(err);
-           
             });
         });
 
