@@ -94,14 +94,11 @@
                             "'target='_blank'> Read more about article here</a>").attr("data-savedLink", "link");
                 var savedId= data[j]._id;
                   
-            
+                //buttons to add, view and delete note
                 var addNoteBtn= $("<button>").addClass("addNote").text("Add Note");
                 var viewNoteBtn= $("<button>").addClass("viewNotes").text("View Notes");
                 var deleteNoteBtn= $("<button>").addClass("deleteBtn").text("Delete Article");
-                // var savedTitle = data[j].title;
-                // var savedSummary = data[j].summary;
-                // var savedLink = data[j].link;
-                // var savedId= data[j]._id;
+
                 
                 if(data[j].summary == "") {
                     var nullMsg = $("<p>").text("Sorry, no summary at this time. Click link for more").attr("data-savedSummary", "summary");

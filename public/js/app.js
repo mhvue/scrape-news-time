@@ -75,11 +75,47 @@ $(document).ready(function () {
                 $.post("/api/addnote/" + noteIdArticle, addNote, function (data,status) {
                     console.log(data,status)
                     //clear the text box after posting and show words Added to user 
-                    $("#noteBox").val(" ").before("<h2>Added!</h2>")       
+                   // $("#noteBox").val(" ").before("<h2>Added!</h2>")    
+                   
+                   $.get("/api/allnotes/" + noteIdArticle, function (data) {
+                    console.log(data)
+                    for (var k = 0; k < data.note.length; k++) {
+                        console.log(data.note.length)
+                        var noteBody=data.note[k].body;
+                        var noteId = data.note[k]._id
+                        console.log(noteBody,noteId)
+
+                        var persistTxtBox = $("<div>").addClass("savednotes").attr("id",noteId).append(
+                        $("<p>").html(noteBody),
+                        $("<button>").addClass("x-btn").text("x"));
+    
+                        $(".modal-body").prepend("<br>",persistTxtBox);
+
+                           //deleting a note
+                            $(".x-btn").on("click",function () {
+                                var xId = $(this).parent("div").attr("id");
+                                console.log(xId)
+                            
+                            // var xId = $(".x-btn").parent("div").attr("id");
+                            // console.log(xId)
+                            $($(this).parent("div")).fadeOut("slow");
+
+                            $.get("api/deletenote/" + xId, function(data, status){
+                                console.log("delete status:" + status)
+                            });
+
+                });
+                    };
+    
+    
+                });
+
+               
                 });     
             });
     });
 
+      
     // view notes 
     $(document.body).on("click",".viewNotes", function(){
        var noteIdArticle = $(this).parent("div").attr("id");
