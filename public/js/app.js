@@ -132,7 +132,7 @@ $(document).ready(function () {
                     $("<p>").html(noteBody),
                     $("<button>").addClass("x-btn").text("x"));
 
-                    $("#viewSpan").prepend("<br>",persistTxtBox);
+                    $("#viewSpan").html(persistTxtBox); //gotta fix this.if we use prepend, it prepends ALL the notes over again. if use html, it replaces each every time SO not showing allnotes.
                 };
 
             });
