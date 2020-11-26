@@ -89,7 +89,7 @@ $(document).ready(function () {
                         $("<p>").html(noteBody),
                         $("<button>").addClass("x-btn").text("x"));
     
-                        $(".modal-body").prepend("<br>",persistTxtBox);
+                        $(".modal-body").prepend("<br>",persistTxtBox); //same issues here, need to fix b/c it prepends every time over and over again per click
 
                            //deleting a note
                             $(".x-btn").on("click",function () {
