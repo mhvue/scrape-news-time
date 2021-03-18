@@ -104,46 +104,38 @@ $(document).ready(function () {
                                 console.log("delete status:" + status)
                             });
 
-                });
+                        });
                     };
-    
-    
-                });
-
-               
+                    });
                 });     
             });
     });
-
       
     // view notes 
     $(document.body).on("click",".viewNotes", function(){
        var noteIdArticle = $(this).parent("div").attr("id");
-       var persistTxtBox;
+       var persistTxtBox= $("<div>").addClass("savednotes");
        $("#viewNotesModal").modal("toggle");
 
             $.get("/api/allnotes/" + noteIdArticle, function (data) {
-                console.log(data)
+                console.log(data.note)
                 for (var k = 0; k < data.note.length; k++) {
-                    var noteBody=data.note[k].body;
                     var noteId = data.note[k]._id
+                    var noteBody="<p class='noteBody'>"+data.note[k].body+"</p>";
+                    
+                    var noteBody2= $(noteBody).attr("id", noteId).append($("<button>").addClass("x-btn").text("x"));
+    
+                     persistTxtBox.append(noteBody2)
 
-                     persistTxtBox = $("<div>").attr("id", noteId).addClass("savednotes").append(
-                    $("<p>").html(noteBody),
-                    $("<button>").addClass("x-btn").text("x"));
-
-                    $("#viewSpan").html(persistTxtBox); //gotta fix this.if we use prepend, it prepends ALL the notes over again. if use html, it replaces each every time SO not showing allnotes.
+                    $("#viewSpan").html(persistTxtBox); 
                 };
-
             });
 
              //deleting a note
             $(document.body).on("click", ".x-btn", function () {
                 //get the id of the article  
-                var xId = $(this).parent("div").attr("id");
-
+                var xId = $(this).parent("p").attr("id");
                 $("#" + xId).fadeOut("slow");
-
                 $.get("api/deletenote/" + xId, function(data, status){
                     console.log("delete status:" + status)
                 });
@@ -151,8 +143,6 @@ $(document).ready(function () {
             });
     })
    
-   
-
     //delete all articles from Index.html
     $("#clear-button").on("click", function () {
         $(".articlesTable").empty();
@@ -173,6 +163,4 @@ $(document).ready(function () {
         $("#" + deleteArticle).fadeOut();
 
     });
-
-
 });

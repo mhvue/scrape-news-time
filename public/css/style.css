@@ -83,9 +83,7 @@ body, .card, .card-header {
     top:60px;
     
 }
-.savednotes{
-    border: 1px solid;
-}
+
 
 /* obtained from stack overflow */
 .x-btn{ 
@@ -97,4 +95,8 @@ body, .card, .card-header {
 .viewBody{
     margin-left: 10px;
     margin-right: 10px;
+}
+
+.noteBody{
+    border: 2px solid;
 }
