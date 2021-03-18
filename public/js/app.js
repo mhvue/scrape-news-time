@@ -75,38 +75,7 @@ $(document).ready(function () {
                 $.post("/api/addnote/" + noteIdArticle, addNote, function (data,status) {
                     console.log(data,status)
                     //clear the text box after posting and show words Added to user 
-                   // $("#noteBox").val(" ").before("<h2>Added!</h2>")    
-                   
-                   $.get("/api/allnotes/" + noteIdArticle, function (data) {
-                    console.log(data)
-                    for (var k = 0; k < data.note.length; k++) {
-                        console.log(data.note.length)
-                        var noteBody=data.note[k].body;
-                        var noteId = data.note[k]._id
-                        console.log(noteBody,noteId)
-
-                        var persistTxtBox = $("<div>").addClass("savednotes").attr("id",noteId).append(
-                        $("<p>").html(noteBody),
-                        $("<button>").addClass("x-btn").text("x"));
-    
-                        $(".modal-body").prepend("<br>",persistTxtBox); //same issues here, need to fix b/c it prepends every time over and over again per click
-
-                           //deleting a note
-                            $(".x-btn").on("click",function () {
-                                var xId = $(this).parent("div").attr("id");
-                                console.log(xId)
-                            
-                            // var xId = $(".x-btn").parent("div").attr("id");
-                            // console.log(xId)
-                            $($(this).parent("div")).fadeOut("slow");
-
-                            $.get("api/deletenote/" + xId, function(data, status){
-                                console.log("delete status:" + status)
-                            });
-
-                        });
-                    };
-                    });
+                     $("#noteBox").val(" ").before("<h4>Added!</h4>")  
                 });     
             });
     });
@@ -119,14 +88,12 @@ $(document).ready(function () {
 
             $.get("/api/allnotes/" + noteIdArticle, function (data) {
                 console.log(data.note)
-                for (var k = 0; k < data.note.length; k++) {
+                //want most recent note to show up first 
+                for (var k = data.note.length-1; k >= 0; k--) {
                     var noteId = data.note[k]._id
                     var noteBody="<p class='noteBody'>"+data.note[k].body+"</p>";
-                    
                     var noteBody2= $(noteBody).attr("id", noteId).append($("<button>").addClass("x-btn").text("x"));
-    
                      persistTxtBox.append(noteBody2)
-
                     $("#viewSpan").html(persistTxtBox); 
                 };
             });
