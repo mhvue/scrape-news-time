@@ -74,8 +74,16 @@ $(document).ready(function () {
                 //send enter note to this endpt to update db 
                 $.post("/api/addnote/" + noteIdArticle, addNote, function (data,status) {
                     console.log(data,status)
-                    //clear the text box after posting and show words Added to user 
-                     $("#noteBox").val(" ").before("<h4>Added!</h4>")  
+                    //hide text box. so msg to user that is Added 
+            
+                     if($.trim($("#noteBox").html()) ==''){
+                        $("#noteBox").show();
+                     }else{
+                        $("#noteBox").hide();
+                        var addedMsg= "<h4>Note Added!</h4>";
+   
+                        $(".modal-body").html(addedMsg);
+                     }
                 });     
             });
     });
@@ -83,19 +91,26 @@ $(document).ready(function () {
     // view notes 
     $(document.body).on("click",".viewNotes", function(){
        var noteIdArticle = $(this).parent("div").attr("id");
+    console.log(noteIdArticle)
        var persistTxtBox= $("<div>").addClass("savednotes");
-       $("#viewNotesModal").modal("toggle");
-
+     
             $.get("/api/allnotes/" + noteIdArticle, function (data) {
+                $("#viewNotesModal").modal("toggle");
+
                 console.log(data.note)
-                //want most recent note to show up first 
-                for (var k = data.note.length-1; k >= 0; k--) {
-                    var noteId = data.note[k]._id
-                    var noteBody="<p class='noteBody'>"+data.note[k].body+"</p>";
-                    var noteBody2= $(noteBody).attr("id", noteId).append($("<button>").addClass("x-btn").text("x"));
-                     persistTxtBox.append(noteBody2)
-                    $("#viewSpan").html(persistTxtBox); 
-                };
+
+                if(data.note.length >0){
+                    //want most recent note to show up first 
+                    for (var k = data.note.length-1; k >= 0; k--) {
+                        var noteId = data.note[k]._id
+                        var noteBody="<p class='noteBody'>"+data.note[k].body+"</p>";
+                        var noteBody2= $(noteBody).attr("id", noteId).append($("<button>").addClass("x-btn").text("x"));
+                        persistTxtBox.append(noteBody2)
+                        $("#viewSpan").html(persistTxtBox); 
+                    };
+                }else{
+                    $("#viewSpan").html("");
+                }
             });
 
              //deleting a note
