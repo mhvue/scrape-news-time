@@ -123,7 +123,7 @@ app.post("/api/addnote/:id", function(req, res){
 app.get("/api/allnotes/:id", function(req, res){
 
     var savedArticle = req.params.id;
-    console.log(savedArticle)
+   
     db.Article.findById(savedArticle).populate("note").then(function (dbArticle) {
         console.log(dbArticle)
         res.json(dbArticle);

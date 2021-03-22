@@ -71,19 +71,13 @@ $(document).ready(function () {
                 var addNote = {
                     body: $("#noteBox").val()
                 };
-                //send enter note to this endpt to update db 
+                //send enter note to this endpt to update db at that specific article id
+                //PROBLEM: keep running into a note getting added to previous ID and not sure why....trying to troubleshoot
                 $.post("/api/addnote/" + noteIdArticle, addNote, function (data,status) {
-                    console.log(data,status)
-                    //hide text box. so msg to user that is Added 
-            
-                     if($.trim($("#noteBox").html()) ==''){
-                        $("#noteBox").show();
-                     }else{
-                        $("#noteBox").hide();
-                        var addedMsg= "<h4>Note Added!</h4>";
-   
-                        $(".modal-body").html(addedMsg);
-                     }
+                    //hide text box. show msg to user that is Added 
+                    $("#noteBox").hide();
+                    var addedMsg= "<h4>Note Added!</h4>";
+                    $(".modal-body").html(addedMsg);
                 });     
             });
     });
@@ -91,14 +85,10 @@ $(document).ready(function () {
     // view notes 
     $(document.body).on("click",".viewNotes", function(){
        var noteIdArticle = $(this).parent("div").attr("id");
-    console.log(noteIdArticle)
        var persistTxtBox= $("<div>").addClass("savednotes");
      
             $.get("/api/allnotes/" + noteIdArticle, function (data) {
                 $("#viewNotesModal").modal("toggle");
-
-                console.log(data.note)
-
                 if(data.note.length >0){
                     //want most recent note to show up first 
                     for (var k = data.note.length-1; k >= 0; k--) {
