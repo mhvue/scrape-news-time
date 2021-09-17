@@ -1,24 +1,24 @@
-var db = require("../models");
-var axios = require("axios");
-var cheerio = require("cheerio");
+const db = require("../models");
+const axios = require("axios");
+const cheerio = require("cheerio");
 
-module.exports = function(app) {
+module.exports = (app) => {
 
-app.get("/api/scrape", function(req, res){
-    axios.get("https://people.com/tag/beauty-news/").then(function(response){
+app.get("/api/scrape", (req, res) => {
+    axios.get("https://people.com/tag/beauty-news/").then((response) => {
 
-        var $ = cheerio.load(response.data);
-        var results = {};
+        const $ = cheerio.load(response.data);
+        const results = {};
 
-        $(".category-page-item").each(function(i, element){
+        $(".category-page-item").each((i, element) => {
             results.link = $(element).children(".category-page-item-content").children("a").attr("href")
            results.title =$(element).children(".category-page-item-content").children("a").find(".category-page-item-title").text();
             results.summary = $(element).children(".category-page-item-content").children(".category-page-item-description").text();
 
-            db.Article.create(results).then(function(dbArticle){
+            db.Article.create(results).then((dbArticle) => {
               console.log(dbArticle);
             })
-            .catch(function(err){
+            .catch((err) => {
                 console.log(err);
             });
         });
@@ -29,8 +29,8 @@ app.get("/api/scrape", function(req, res){
     
 
  //delete ALL articles
-app.get("/api/delete", function(req, res) {
-   db.Article.deleteMany({"saved":false}, function (err) {
+app.get("/api/delete", (req, res) => {
+   db.Article.deleteMany({"saved":false}, (err) => {
         if(err) console.log(err);
         console.log("Successful deletion");
       });
@@ -40,10 +40,10 @@ app.get("/api/delete", function(req, res) {
 });
 
  //delete one article from saved html
- app.get("/api/delete/:id", function(req, res) {
-    var noteId = req.params.id;
+ app.get("/api/delete/:id", (req, res) => {
+    const noteId = req.params.id;
     
-    db.Article.deleteOne({"_id": noteId}, function (err, result) {
+    db.Article.deleteOne({"_id": noteId}, (err, result) => {
          if(err){
              console.log(err);
          }
@@ -56,92 +56,92 @@ app.get("/api/delete", function(req, res) {
 
 
 //get all the articles (that is scraped)
-app.get("/api/all", function (req,res){
-    db.Article.find({"saved": false}).then(function(dbAll){
+app.get("/api/all", (req, res) => {
+    db.Article.find({"saved": false}).then((dbAll) => {
         res.json(dbAll);
     })
-    .catch(function(err){
+    .catch((err) => {
         res.json(err);
     });
 
 });
 
 //get that specific article  
-app.get("/api/savedarticle/:id", function(req, res){
-    var savedArticle = req.params.id
+app.get("/api/savedarticle/:id", (req, res) => {
+    const savedArticle = req.params.id
 
-    db.Article.findById(savedArticle).then(function(dbOne){
+    db.Article.findById(savedArticle).then((dbOne) => {
         res.json(dbOne);
     })
-    .catch(function(err){
+    .catch((err) => {
         res.json(err);
     });
 });
 
 // get route to display all saved article 
-app.get("/api/allsaved", function(req, res){
+app.get("/api/allsaved", (req, res) => {
 
-    db.Article.find({"saved": true}).then(function(dbAll){
+    db.Article.find({"saved": true}).then((dbAll) => {
         res.json(dbAll);
     })
-    .catch(function(err){
+    .catch((err) => {
         res.json(err);
     });
   
 });
 
 //update = specific article to SAVE 
-app.put("/api/savearticle/:id", function(req, res){
+app.put("/api/savearticle/:id", (req, res) => {
 
-    var savedArticle = req.params.id;
+    const savedArticle = req.params.id;
     
-    db.Article.findOneAndUpdate({_id:savedArticle}, {$set: {saved: true}}).then(function(dbOne){
+    db.Article.findOneAndUpdate({_id:savedArticle}, {$set: {saved: true}}).then((dbOne) => {
         res.json(dbOne);
     })
-    .catch(function(err){
+    .catch((err) => {
         res.json(err);
     });
 });
 
 //user can post note associated with that specific article 
-app.post("/api/addnote/:id", function(req, res){
+app.post("/api/addnote/:id", (req, res) => {
 
-    var note= req.body.body;
-    var savedArticle = req.params.id;
+    const note= req.body.body;
+    const savedArticle = req.params.id;
 
-    db.Note.create({"body": note}).then(function(dbNote){
+    db.Note.create({"body": note}).then((dbNote) => {
         return db.Article.findOneAndUpdate({_id:savedArticle}, {$push: {note: dbNote._id }},{new: true}) 
-    }).then(function(dbArticle){
+    }).then((dbArticle) => {
         res.json(dbArticle);
     })
-    .catch(function(err){
+    .catch((err) => {
         res.json(err);
     });
 });
 
 //users can get ALL notes for that specific article 
-app.get("/api/allnotes/:id", function(req, res){
+app.get("/api/allnotes/:id", (req, res) => {
 
-    var savedArticle = req.params.id;
+    const savedArticle = req.params.id;
    
-    db.Article.findById(savedArticle).populate("note").then(function (dbArticle) {
+    db.Article.findById(savedArticle).populate("note").then((dbArticle) => {
         console.log(dbArticle)
         res.json(dbArticle);
     })
-    .catch(function(err){
+    .catch((err) => {
         res.json(err);
     });
 
 });
 
 //user can delete note 
-app.get("/api/deletenote/:id", function (req, res){
+app.get("/api/deletenote/:id", (req, res) => {
     
-    var noteId = req.params.id;
+    const noteId = req.params.id;
 
-    db.Note.deleteOne({"_id":noteId}).then(function(dbNote){
+    db.Note.deleteOne({"_id":noteId}).then((dbNote) => {
         res.json(dbNote);
-    }).catch(function(err){
+    }).catch((err) => {
         res.json(err);
     });
 

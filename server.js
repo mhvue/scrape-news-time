@@ -1,18 +1,18 @@
-var express = require("express");
-var mongoose = require("mongoose");
+const express = require("express");
+const mongoose = require("mongoose");
 
-var PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
-var app = express();
+const app = express();
 
-var db = require("./models"); 
+const db = require("./models"); 
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
 mongoose.connect("mongodb://localhost/scrapenewsdb", { useUnifiedTopology: true, useNewUrlParser: true });
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapenewsdb";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapenewsdb";
 
 mongoose.connect(MONGODB_URI);
 mongoose.set('useFindAndModify', false);
@@ -21,8 +21,8 @@ mongoose.set('useFindAndModify', false);
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
 
-app.listen(PORT, function(){
-    console.log("Listening on " + "http://localhost:" + PORT)
+app.listen(PORT, () =>{
+    console.log("Listening on " + `http://localhost:${PORT}`)
 });
 
 module.exports = app;
