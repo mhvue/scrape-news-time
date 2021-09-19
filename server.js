@@ -15,7 +15,6 @@ mongoose.connect("mongodb://localhost/scrapenewsdb", { useUnifiedTopology: true,
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapenewsdb";
 
 mongoose.connect(MONGODB_URI);
-mongoose.set('useFindAndModify', false);
 
 //routes here
 require("./routes/apiRoutes")(app);
